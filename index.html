@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta name="theme-color" content="#20160f" />
+<meta name="description" content="나에게 맞는 정신건강전문요원 찾기 레트로 RPG 웹게임" />
+<title>나에게 맞는 정신건강전문요원 찾기</title>
+<link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+<div class="app">
+  <div class="shell">
+    <div class="top">
+      <span>마음건강센터</span>
+      <span class="badge" id="badge">START</span>
+    </div>
+
+    <div class="screen">
+      <section class="scene" id="titleScene" aria-label="시작 화면">
+        <div class="sky"></div>
+        <div class="cloud c1"></div>
+        <div class="cloud c2"></div>
+
+        <div class="building" aria-hidden="true">
+          <div class="cross">+</div>
+          <div class="win w1"></div>
+          <div class="win w2"></div>
+          <div class="door"></div>
+        </div>
+
+        <h1 class="titleText">나에게 맞는<br>정신건강전문요원 찾기</h1>
+        <p class="sub">레트로 접수실에서 필요한 서비스를 찾아보세요.</p>
+        <button class="startBtn" type="button" onclick="start()">▶ 시작하기</button>
+        <p class="msg">같은 우울과 불안이라도<br>필요한 전문 서비스는 다를 수 있습니다.</p>
+      </section>
+
+      <section class="scene hidden" id="hallScene" aria-label="접수실">
+        <div class="floor"></div>
+        <div class="counter"></div>
+
+        <div class="sprite staff" aria-hidden="true">
+          <div class="hair"></div>
+          <div class="head face"></div>
+          <div class="body"></div>
+          <div class="legs"></div>
+        </div>
+
+        <div class="roomGrid" id="roomGrid"></div>
+      </section>
+
+      <section class="scene hidden" id="roomScene" aria-label="상담실">
+        <div class="wall"></div>
+        <div class="wood"></div>
+        <div class="bookshelf"></div>
+
+        <div class="table"></div>
+        <div class="tableText" id="tableText">WAIS · MMPI · 심리치료</div>
+
+        <div class="sprite roomNpc" id="roomNpc" aria-hidden="true">
+          <div class="hair"></div>
+          <div class="head face"></div>
+          <div class="body"></div>
+          <div class="legs"></div>
+        </div>
+
+        <div class="sprite playerRoom" aria-hidden="true">
+          <div class="hair"></div>
+          <div class="head face"></div>
+          <div class="body"></div>
+          <div class="legs"></div>
+        </div>
+      </section>
+
+      <section class="scene hidden" id="resultScene" aria-label="결과 화면">
+        <div class="paperBg">
+          <div class="paper" id="resultPaper"></div>
+        </div>
+      </section>
+    </div>
+
+    <div class="dialog" aria-label="대화창">
+      <div class="progressBox">
+        <span class="progressLabel" id="progressLabel">대기</span>
+        <div class="progressTrack" aria-hidden="true">
+          <div class="progressFill" id="progressFill"></div>
+        </div>
+      </div>
+
+      <div class="speaker" id="speaker">안내</div>
+      <div class="textbox" id="textbox">시작하기를 눌러 마음건강센터에 들어가 보세요.</div>
+      <div class="choices" id="choices"></div>
+
+      <div class="navbar">
+        <button class="navbtn" id="backBtn" type="button" onclick="goBack()">◀ 이전</button>
+        <button class="navbtn" type="button" onclick="restart()">🏠 처음</button>
+        <button class="navbtn" type="button" onclick="showHistory()">📒 선택</button>
+      </div>
+    </div>
+
+    <div class="footer">
+      ※ 교육·홍보용 목업입니다. 위기 상황이거나 긴급한 도움이 필요하면 가까운 응급실, 1393, 112 등 즉각적인 도움을 우선 이용하세요.
+    </div>
+  </div>
+</div>
+
+<div class="modal hidden" id="historyModal" role="dialog" aria-modal="true" aria-label="현재까지 선택">
+  <div class="modalCard">
+    <h3>현재까지 선택</h3>
+    <div class="historyList" id="historyList"></div>
+    <button class="closeBtn" type="button" onclick="closeHistory()">닫기</button>
+  </div>
+</div>
+
+<script src="./script.js"></script>
+</body>
+</html>

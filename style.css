@@ -1,0 +1,1902 @@
+:root{
+  --line:#120b06;
+  --ink:#24170f;
+  --cream:#fff4da;
+  --paper:#fff8e8;
+  --panel:#372417;
+  --panel-dark:#20140d;
+  --wood:#6b3f25;
+  --gold:#f3c85d;
+  --blue:#2f70b7;
+  --green:#4d9a45;
+  --mint:#3aa69b;
+  --purple:#8357c7;
+  --red:#d35252;
+  --sky:#78bfea;
+  --grass:#78b85e;
+  --shadow:#0008;
+  --safe-bottom:env(safe-area-inset-bottom,0px);
+}
+
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html{
+  min-height:100%;
+  background:#15100c;
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+  min-height:100svh;
+  background:
+    linear-gradient(180deg,#15100c,#24170f 48%,#100b08);
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  color:var(--ink);
+  overscroll-behavior:none;
+}
+
+button{
+  font:inherit;
+  cursor:pointer;
+  touch-action:manipulation;
+}
+
+.app{
+  width:100%;
+  max-width:460px;
+  min-height:100vh;
+  min-height:100svh;
+  margin:0 auto;
+  padding:8px 8px calc(8px + var(--safe-bottom));
+  background:#20160f;
+}
+
+.shell{
+  min-height:calc(100vh - 16px - var(--safe-bottom));
+  min-height:calc(100svh - 16px - var(--safe-bottom));
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+  border:4px solid #080504;
+  border-radius:18px;
+  background:#5b3922;
+  box-shadow:
+    0 0 0 4px #1b1009,
+    0 18px 36px #000a;
+}
+
+.top{
+  flex:0 0 42px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  padding:0 11px;
+  border-bottom:4px solid var(--line);
+  background:
+    linear-gradient(#7b4c2e,#3a2315);
+  color:#fff5dc;
+  font-weight:1000;
+  text-shadow:2px 2px #000;
+}
+
+.top span:first-child{
+  min-width:0;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+}
+
+.badge{
+  flex:0 0 auto;
+  min-width:58px;
+  text-align:center;
+  background:#193c73;
+  border:3px solid #071a34;
+  border-radius:999px;
+  padding:4px 8px;
+  font-size:11px;
+  line-height:1.1;
+}
+
+.screen{
+  position:relative;
+  flex:1 1 auto;
+  min-height:292px;
+  height:clamp(292px,48svh,430px);
+  overflow:hidden;
+  background:#80c7ed;
+  image-rendering:pixelated;
+}
+
+.scene{
+  position:absolute;
+  inset:0;
+}
+
+.hidden{
+  display:none!important;
+}
+
+/* title scene */
+
+.sky{
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(var(--sky) 0 52%,var(--grass) 52% 100%);
+}
+
+.cloud{
+  position:absolute;
+  background:#fff;
+  border-radius:999px;
+  opacity:.95;
+  box-shadow:18px 3px 0 #fff,-14px 5px 0 #fff;
+}
+
+.c1{
+  left:28px;
+  top:34px;
+  width:64px;
+  height:18px;
+}
+
+.c2{
+  right:34px;
+  top:70px;
+  width:52px;
+  height:16px;
+}
+
+.building{
+  position:absolute;
+  left:50%;
+  top:45%;
+  transform:translate(-50%,-34%);
+  width:min(210px,58vw);
+  height:108px;
+  background:#d28f55;
+  border:5px solid var(--line);
+  border-radius:8px;
+  box-shadow:0 8px #0004;
+}
+
+.building:before{
+  content:"";
+  position:absolute;
+  left:-16px;
+  right:-16px;
+  top:-35px;
+  height:42px;
+  background:#8c4f2d;
+  border:5px solid var(--line);
+  border-radius:10px;
+}
+
+.cross{
+  position:absolute;
+  left:50%;
+  top:-54px;
+  transform:translateX(-50%);
+  width:42px;
+  height:42px;
+  background:#fff6df;
+  border:5px solid var(--line);
+  border-radius:8px;
+  color:var(--green);
+  text-align:center;
+  line-height:31px;
+  font-size:25px;
+  font-weight:1000;
+}
+
+.door{
+  position:absolute;
+  left:50%;
+  bottom:0;
+  transform:translateX(-50%);
+  width:38px;
+  height:56px;
+  background:#4d2e1b;
+  border:4px solid var(--line);
+  border-bottom:0;
+  border-radius:7px 7px 0 0;
+}
+
+.win{
+  position:absolute;
+  top:42px;
+  width:34px;
+  height:32px;
+  background:#9ed2ff;
+  border:4px solid var(--line);
+  border-radius:4px;
+}
+
+.w1{left:26px}
+.w2{right:26px}
+
+.titleText{
+  position:absolute;
+  left:14px;
+  right:14px;
+  top:22px;
+  margin:0;
+  text-align:center;
+  color:#fff8df;
+  font-size:clamp(25px,8.2vw,34px);
+  line-height:1.08;
+  font-weight:1000;
+  letter-spacing:0;
+  text-shadow:
+    3px 3px #173b70,
+    -2px -2px #173b70,
+    2px -2px #173b70,
+    -2px 2px #173b70;
+}
+
+.sub{
+  position:absolute;
+  left:24px;
+  right:24px;
+  top:102px;
+  margin:0;
+  text-align:center;
+  font-weight:950;
+  color:#173b70;
+  font-size:13px;
+  line-height:1.35;
+}
+
+.startBtn{
+  position:absolute;
+  left:50%;
+  bottom:58px;
+  transform:translateX(-50%);
+  width:min(220px,68vw);
+  min-height:48px;
+  background:#3d2415;
+  color:#fff6df;
+  border:4px solid var(--line);
+  border-radius:9px;
+  padding:12px 14px;
+  font-size:18px;
+  font-weight:1000;
+  box-shadow:0 6px #0005;
+}
+
+.startBtn:active{
+  transform:translate(-50%,3px);
+  box-shadow:0 3px #0005;
+}
+
+.msg{
+  position:absolute;
+  left:16px;
+  right:16px;
+  bottom:10px;
+  margin:0;
+  background:#3d2415;
+  color:#fff6df;
+  border:4px solid var(--line);
+  border-radius:9px;
+  padding:9px 10px;
+  text-align:center;
+  font-size:12px;
+  line-height:1.4;
+  font-weight:850;
+}
+
+/* sprite */
+
+.sprite{
+  position:absolute;
+  width:42px;
+  height:54px;
+  filter:drop-shadow(0 4px #0005);
+}
+
+.head{
+  position:absolute;
+  left:9px;
+  top:2px;
+  width:24px;
+  height:24px;
+  background:#ffd3ad;
+  border:3px solid var(--line);
+  border-radius:6px;
+}
+
+.hair{
+  position:absolute;
+  left:6px;
+  top:0;
+  z-index:2;
+  width:30px;
+  height:14px;
+  background:#4a2b1f;
+  border:3px solid var(--line);
+  border-radius:9px 9px 3px 3px;
+}
+
+.face:before,
+.face:after{
+  content:"";
+  position:absolute;
+  top:11px;
+  z-index:3;
+  width:3px;
+  height:3px;
+  background:var(--line);
+}
+
+.face:before{left:7px}
+.face:after{right:7px}
+
+.body{
+  position:absolute;
+  left:7px;
+  top:27px;
+  width:28px;
+  height:24px;
+  background:#ffc64a;
+  border:3px solid var(--line);
+  border-radius:4px;
+}
+
+.legs:before,
+.legs:after{
+  content:"";
+  position:absolute;
+  top:49px;
+  width:10px;
+  height:8px;
+  background:var(--line);
+}
+
+.legs:before{left:10px}
+.legs:after{right:10px}
+
+/* hall */
+
+.floor{
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(90deg,#00000012 1px,transparent 1px) 0 0/32px 32px,
+    linear-gradient(#00000012 1px,transparent 1px) 0 0/32px 32px,
+    #a8b6b8;
+}
+
+.counter{
+  position:absolute;
+  left:16%;
+  right:16%;
+  top:22px;
+  height:68px;
+  background:#8a522e;
+  border:4px solid var(--line);
+  border-radius:5px;
+}
+
+.counter:before{
+  content:"접 수";
+  position:absolute;
+  left:50%;
+  top:-27px;
+  transform:translateX(-50%);
+  background:#9c622f;
+  color:#fff8df;
+  border:3px solid var(--line);
+  border-radius:6px;
+  padding:4px 22px;
+  font-weight:1000;
+  white-space:nowrap;
+}
+
+.staff{
+  left:50%;
+  top:72px;
+  transform:translateX(-50%);
+}
+
+.staff .body{background:#fff}
+
+.roomGrid{
+  position:absolute;
+  left:12px;
+  right:12px;
+  bottom:12px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+}
+
+.roomBtn{
+  position:relative;
+  min-width:0;
+  height:clamp(78px,12.2svh,96px);
+  background:#fff4da;
+  border:4px solid var(--line);
+  border-radius:10px;
+  padding:7px 6px;
+  text-align:center;
+  font-weight:1000;
+  color:var(--ink);
+  box-shadow:0 5px #0004;
+  overflow:hidden;
+}
+
+.roomBtn:before{
+  content:"";
+  position:absolute;
+  left:7px;
+  right:7px;
+  top:7px;
+  height:3px;
+  background:#ffffffb8;
+}
+
+.roomBtn:active{
+  transform:translateY(3px);
+  box-shadow:0 2px #0004;
+}
+
+.roomIcon{
+  display:block;
+  font-size:24px;
+  line-height:1;
+  margin-bottom:4px;
+}
+
+.roomSmall{
+  display:block;
+  margin-top:3px;
+  color:#4b2f1d;
+  font-size:10.5px;
+  line-height:1.22;
+  word-break:keep-all;
+}
+
+.recommended{
+  outline:5px solid #ffd84f;
+  background:#fff0bd;
+}
+
+.secondaryMark{
+  outline:5px solid #9ed2ff;
+  background:#eef7ff;
+}
+
+/* room */
+
+.wall{
+  position:absolute;
+  left:0;
+  right:0;
+  top:0;
+  height:43%;
+  background:
+    linear-gradient(90deg,#00000008 1px,transparent 1px) 0 0/28px 28px,
+    #ead4a9;
+  border-bottom:5px solid #6b4428;
+}
+
+.wood{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  top:43%;
+  background:
+    linear-gradient(90deg,#00000012 1px,transparent 1px) 0 0/32px 32px,
+    linear-gradient(#00000012 1px,transparent 1px) 0 0/32px 32px,
+    #b98d5d;
+}
+
+.bookshelf{
+  position:absolute;
+  right:20px;
+  top:52px;
+  width:74px;
+  height:112px;
+  background:#6b4428;
+  border:4px solid var(--line);
+  border-radius:5px;
+}
+
+.bookshelf:before{
+  content:"";
+  position:absolute;
+  left:8px;
+  right:8px;
+  top:16px;
+  height:11px;
+  background:#60a2d8;
+  box-shadow:0 26px #e0aa39,0 52px #9c6bc9,0 78px #4e9b43;
+}
+
+.table{
+  position:absolute;
+  left:18px;
+  bottom:54px;
+  width:min(216px,55vw);
+  height:70px;
+  background:#8b5a35;
+  border:4px solid var(--line);
+  border-radius:7px;
+}
+
+.tableText{
+  position:absolute;
+  left:24px;
+  bottom:78px;
+  width:min(204px,52vw);
+  color:#fff8e8;
+  font-size:10.5px;
+  font-weight:1000;
+  text-align:center;
+  line-height:1.25;
+  word-break:keep-all;
+}
+
+.roomNpc{
+  left:54%;
+  top:34%;
+}
+
+.roomNpc .body{background:#fff}
+.nurseBody .body{background:#bdf1e8}
+.socialBody .body{background:#20385d}
+.otBody .body{background:#6ba56b}
+
+.playerRoom{
+  left:22%;
+  top:62%;
+}
+
+/* result */
+
+.paperBg{
+  position:absolute;
+  inset:0;
+  padding:10px;
+  background:
+    linear-gradient(90deg,#0000000a 1px,transparent 1px) 0 0/20px 20px,
+    linear-gradient(#f7e7be,#e7bf7e);
+}
+
+.paper{
+  position:relative;
+  height:100%;
+  overflow:auto;
+  -webkit-overflow-scrolling:touch;
+  background:#fff4da;
+  border:5px solid var(--line);
+  border-radius:12px;
+  padding:12px;
+  box-shadow:inset 0 0 0 3px #ffffff73;
+}
+
+.paper:before{
+  content:"QUEST CLEAR";
+  display:block;
+  margin:0 auto 8px;
+  width:max-content;
+  max-width:100%;
+  padding:5px 12px;
+  background:#173b70;
+  color:#fff8df;
+  border:3px solid var(--line);
+  border-radius:6px;
+  font-size:11px;
+  font-weight:1000;
+  text-shadow:1px 1px #000;
+}
+
+.paper h2{
+  margin:4px 0 10px;
+  text-align:center;
+  color:#23170f;
+  font-size:20px;
+  line-height:1.2;
+  font-weight:1000;
+}
+
+#shareCard{
+  display:grid;
+  gap:9px;
+}
+
+.course,
+.reason,
+.evidence{
+  position:relative;
+  margin:0;
+  border:3px solid var(--line);
+  border-radius:8px;
+  padding:10px;
+  color:#21150d;
+  line-height:1.5;
+  font-size:13px;
+  font-weight:850;
+  word-break:keep-all;
+  box-shadow:0 3px #0002;
+}
+
+.course{
+  background:#fff0c2;
+}
+
+.reason{
+  background:#eef6ff;
+}
+
+.evidence{
+  background:#f7e7ff;
+}
+
+.cardTitle{
+  display:inline-block;
+  margin:0 0 7px;
+  padding:3px 7px;
+  background:#3a2517;
+  color:#fff4da;
+  border:2px solid var(--line);
+  border-radius:5px;
+  font-size:12px;
+  line-height:1.1;
+  font-weight:1000;
+}
+
+.bar{
+  margin:8px 0;
+}
+
+.barTop{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:8px;
+  margin-bottom:3px;
+  font-weight:1000;
+  font-size:11.5px;
+  line-height:1.25;
+}
+
+.barTop span:first-child{
+  min-width:0;
+  word-break:keep-all;
+}
+
+.track{
+  height:13px;
+  overflow:hidden;
+  background:#dcc28e;
+  border:2px solid var(--line);
+  border-radius:999px;
+}
+
+.fill{
+  height:100%;
+}
+
+.copyBtn,
+.saveBtn,
+#downloadLink{
+  width:100%;
+  min-height:44px;
+  color:#fff;
+  border:3px solid var(--line);
+  border-radius:8px;
+  padding:10px;
+  font-weight:1000;
+  text-align:center;
+  text-decoration:none;
+  box-shadow:0 4px #0004;
+}
+
+.copyBtn,
+.saveBtn{
+  margin-top:9px;
+}
+
+.copyBtn{
+  background:#d76b83;
+}
+
+.saveBtn{
+  background:#2f70b7;
+}
+
+#downloadLink{
+  display:none;
+  margin-top:8px;
+  background:#4d9a45;
+}
+
+/* dialog */
+
+.dialog{
+  flex:0 0 auto;
+  min-height:230px;
+  max-height:43svh;
+  overflow:auto;
+  -webkit-overflow-scrolling:touch;
+  background:
+    linear-gradient(#432b1b,#2e1d12);
+  border-top:4px solid var(--line);
+  padding:9px 9px 10px;
+  color:#fff3dc;
+}
+
+.progressBox{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-bottom:7px;
+}
+
+.progressLabel{
+  min-width:54px;
+  color:#fff3dc;
+  font-size:11px;
+  font-weight:1000;
+}
+
+.progressTrack{
+  flex:1;
+  height:12px;
+  overflow:hidden;
+  background:#20140d;
+  border:2px solid #070402;
+  border-radius:999px;
+}
+
+.progressFill{
+  height:100%;
+  width:0;
+  background:linear-gradient(90deg,#ffd84f,#9ed2ff);
+}
+
+.speaker{
+  margin-bottom:6px;
+  color:var(--gold);
+  font-weight:1000;
+  text-shadow:1px 1px #000;
+}
+
+.textbox{
+  min-height:68px;
+  background:#fff4da;
+  color:#23170f;
+  border:4px solid var(--line);
+  border-radius:8px;
+  padding:10px;
+  line-height:1.5;
+  font-size:14px;
+  font-weight:850;
+  white-space:pre-line;
+  word-break:keep-all;
+  animation:pop .16s ease-out;
+}
+
+@keyframes pop{
+  from{transform:translateY(4px);opacity:.75}
+  to{transform:translateY(0);opacity:1}
+}
+
+.choices{
+  display:grid;
+  gap:8px;
+  margin-top:9px;
+}
+
+.choice{
+  width:100%;
+  min-height:44px;
+  background:#fff4da;
+  color:#23170f;
+  border:3px solid var(--line);
+  border-radius:8px;
+  padding:10px 9px;
+  text-align:left;
+  font-size:13.5px;
+  line-height:1.35;
+  font-weight:900;
+  word-break:keep-all;
+  box-shadow:0 4px #0006;
+}
+
+.choice:active{
+  transform:translateY(3px);
+  box-shadow:0 1px #0006;
+}
+
+.navbar{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:7px;
+  margin-top:9px;
+}
+
+.navbtn{
+  min-width:0;
+  min-height:40px;
+  background:#e9cf94;
+  color:#23170f;
+  border:3px solid var(--line);
+  border-radius:8px;
+  padding:8px 4px;
+  font-size:12px;
+  font-weight:1000;
+  box-shadow:0 3px #0005;
+}
+
+.navbtn:disabled{
+  opacity:.45;
+}
+
+.footer{
+  flex:0 0 auto;
+  background:#3a2517;
+  color:#fff3dc;
+  border-top:4px solid var(--line);
+  padding:8px 10px calc(8px + var(--safe-bottom));
+  font-size:10.5px;
+  line-height:1.45;
+}
+
+/* modal */
+
+.modal{
+  position:fixed;
+  inset:0;
+  z-index:99;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:16px;
+  background:#0008;
+}
+
+.modalCard{
+  width:100%;
+  max-width:420px;
+  max-height:82svh;
+  overflow:auto;
+  background:#fff4da;
+  border:5px solid var(--line);
+  border-radius:12px;
+  padding:14px;
+  color:#23170f;
+  box-shadow:0 12px 30px #0009;
+}
+
+.modalCard h3{
+  margin:0 0 10px;
+  text-align:center;
+}
+
+.historyList{
+  max-height:50svh;
+  overflow:auto;
+  line-height:1.6;
+  font-weight:850;
+}
+
+.closeBtn{
+  width:100%;
+  min-height:44px;
+  margin-top:12px;
+  background:#3a2517;
+  color:#fff4da;
+  border:3px solid var(--line);
+  border-radius:8px;
+  padding:10px;
+  font-weight:1000;
+}
+
+/* compact phones */
+
+@media (max-width:360px){
+  .app{
+    padding:6px 6px calc(6px + var(--safe-bottom));
+  }
+
+  .shell{
+    border-radius:14px;
+  }
+
+  .top{
+    height:38px;
+    padding:0 9px;
+  }
+
+  .screen{
+    min-height:270px;
+    height:44svh;
+  }
+
+  .titleText{
+    font-size:25px;
+    top:19px;
+  }
+
+  .sub{
+    top:93px;
+    font-size:12px;
+  }
+
+  .building{
+    width:184px;
+    height:98px;
+  }
+
+  .startBtn{
+    bottom:52px;
+    min-height:44px;
+    font-size:16px;
+  }
+
+  .msg{
+    left:12px;
+    right:12px;
+    font-size:11.5px;
+  }
+
+  .roomGrid{
+    left:9px;
+    right:9px;
+    gap:7px;
+  }
+
+  .roomBtn{
+    height:78px;
+    padding:6px 4px;
+  }
+
+  .roomIcon{
+    font-size:21px;
+  }
+
+  .roomSmall{
+    font-size:9.5px;
+  }
+
+  .dialog{
+    min-height:224px;
+    padding:8px;
+  }
+
+  .textbox,
+  .choice{
+    font-size:13px;
+  }
+
+  .course,
+  .reason,
+  .evidence{
+    font-size:12.5px;
+  }
+}
+
+/* taller phones */
+
+@media (min-height:820px){
+  .screen{
+    height:50svh;
+  }
+
+  .dialog{
+    max-height:40svh;
+  }
+}
+
+/* landscape and short in-app browser */
+
+@media (max-height:680px){
+  .screen{
+    min-height:245px;
+    height:42svh;
+  }
+
+  .dialog{
+    min-height:210px;
+    max-height:46svh;
+  }
+
+  .titleText{
+    top:16px;
+  }
+
+  .sub{
+    top:88px;
+  }
+
+  .building{
+    top:48%;
+    height:92px;
+  }
+
+  .startBtn{
+    bottom:48px;
+  }
+
+  .msg{
+    padding:7px 8px;
+    font-size:11px;
+  }
+}
+/* === Codex mobile hotfix: compact Kakao/in-app layout === */
+
+html,
+body{
+  width:100%;
+  height:100%;
+  min-height:100%;
+  overflow:hidden;
+}
+
+body{
+  position:fixed;
+  inset:0;
+}
+
+.app{
+  height:100dvh;
+  min-height:0;
+  padding:4px 4px calc(4px + var(--safe-bottom));
+  overflow:hidden;
+}
+
+.shell{
+  height:100%;
+  min-height:0;
+  border-width:3px;
+  border-radius:12px;
+}
+
+.top{
+  flex:0 0 34px;
+  height:34px;
+  min-height:34px;
+  padding:0 8px;
+  font-size:13px;
+}
+
+.badge{
+  min-width:48px;
+  padding:3px 6px;
+  border-width:2px;
+  font-size:10px;
+}
+
+.screen{
+  flex:0 0 38dvh;
+  min-height:218px;
+  height:38dvh;
+  max-height:330px;
+}
+
+.dialog{
+  flex:1 1 auto;
+  min-height:0;
+  max-height:none;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+  padding:7px;
+}
+
+.progressBox{
+  flex:0 0 auto;
+  margin-bottom:5px;
+}
+
+.progressLabel{
+  min-width:46px;
+  font-size:10px;
+}
+
+.progressTrack{
+  height:10px;
+}
+
+.speaker{
+  flex:0 0 auto;
+  margin-bottom:4px;
+  font-size:13px;
+}
+
+.textbox{
+  flex:0 0 auto;
+  min-height:0;
+  max-height:76px;
+  overflow:auto;
+  padding:8px;
+  border-width:3px;
+  font-size:12.5px;
+  line-height:1.38;
+  word-break:normal;
+  overflow-wrap:anywhere;
+}
+
+.choices{
+  flex:1 1 auto;
+  min-height:0;
+  overflow:auto;
+  gap:6px;
+  margin-top:6px;
+  padding-bottom:2px;
+}
+
+.choice{
+  min-height:36px;
+  padding:8px;
+  border-width:2px;
+  border-radius:7px;
+  font-size:12px;
+  line-height:1.28;
+  word-break:normal;
+  overflow-wrap:anywhere;
+}
+
+.navbar{
+  flex:0 0 auto;
+  gap:5px;
+  margin-top:6px;
+}
+
+.navbtn{
+  min-height:33px;
+  padding:6px 3px;
+  border-width:2px;
+  font-size:11px;
+}
+
+.footer{
+  display:none;
+}
+
+/* title compaction */
+
+.titleText{
+  top:14px;
+  font-size:clamp(21px,6.8vw,28px);
+  line-height:1.08;
+}
+
+.sub{
+  top:78px;
+  left:18px;
+  right:18px;
+  font-size:11.5px;
+  line-height:1.25;
+  word-break:normal;
+  overflow-wrap:anywhere;
+}
+
+.building{
+  top:49%;
+  width:168px;
+  height:86px;
+  border-width:4px;
+}
+
+.building:before{
+  top:-29px;
+  height:34px;
+  border-width:4px;
+}
+
+.cross{
+  top:-46px;
+  width:34px;
+  height:34px;
+  border-width:4px;
+  line-height:25px;
+  font-size:20px;
+}
+
+.win{
+  top:32px;
+  width:28px;
+  height:25px;
+  border-width:3px;
+}
+
+.w1{left:22px}
+.w2{right:22px}
+
+.door{
+  width:32px;
+  height:44px;
+  border-width:3px;
+  border-bottom:0;
+}
+
+.startBtn{
+  bottom:44px;
+  width:184px;
+  min-height:39px;
+  padding:8px 10px;
+  border-width:3px;
+  font-size:15px;
+}
+
+.msg{
+  left:10px;
+  right:10px;
+  bottom:7px;
+  padding:6px 8px;
+  border-width:3px;
+  font-size:10.5px;
+  line-height:1.25;
+}
+
+/* hall compaction */
+
+.counter{
+  top:18px;
+  height:56px;
+  border-width:3px;
+}
+
+.counter:before{
+  top:-23px;
+  padding:3px 16px;
+  border-width:2px;
+  font-size:12px;
+}
+
+.staff{
+  top:56px;
+  transform:translateX(-50%) scale(.86);
+}
+
+.roomGrid{
+  left:8px;
+  right:8px;
+  bottom:8px;
+  gap:6px;
+}
+
+.roomBtn{
+  height:68px;
+  padding:5px 4px;
+  border-width:3px;
+  border-radius:8px;
+  font-size:12px;
+  line-height:1.15;
+  word-break:normal;
+  overflow-wrap:anywhere;
+}
+
+.roomIcon{
+  font-size:18px;
+  margin-bottom:2px;
+}
+
+.roomSmall{
+  margin-top:2px;
+  font-size:9px;
+  line-height:1.15;
+  word-break:normal;
+  overflow-wrap:anywhere;
+}
+
+.recommended,
+.secondaryMark{
+  outline-width:3px;
+}
+
+/* room compaction */
+
+.wall{
+  height:39%;
+}
+
+.wood{
+  top:39%;
+}
+
+.bookshelf{
+  right:14px;
+  top:38px;
+  width:58px;
+  height:86px;
+  border-width:3px;
+}
+
+.bookshelf:before{
+  left:6px;
+  right:6px;
+  top:12px;
+  height:9px;
+  box-shadow:0 20px #e0aa39,0 40px #9c6bc9,0 60px #4e9b43;
+}
+
+.table{
+  left:12px;
+  bottom:34px;
+  width:168px;
+  height:54px;
+  border-width:3px;
+}
+
+.tableText{
+  left:17px;
+  bottom:53px;
+  width:158px;
+  font-size:9px;
+  line-height:1.15;
+  word-break:normal;
+  overflow-wrap:anywhere;
+}
+
+.roomNpc{
+  left:56%;
+  top:30%;
+  transform:scale(.9);
+}
+
+.playerRoom{
+  left:22%;
+  top:58%;
+  transform:scale(.9);
+}
+
+/* result screen: make clear card usable on small phones */
+
+.paperBg{
+  padding:6px;
+}
+
+.paper{
+  padding:8px;
+  border-width:3px;
+  border-radius:9px;
+}
+
+.paper:before{
+  margin-bottom:5px;
+  padding:3px 9px;
+  border-width:2px;
+  font-size:9px;
+}
+
+.paper h2{
+  margin:2px 0 7px;
+  font-size:16px;
+}
+
+#shareCard{
+  gap:6px;
+}
+
+.course,
+.reason,
+.evidence{
+  padding:7px;
+  border-width:2px;
+  border-radius:7px;
+  font-size:11.5px;
+  line-height:1.35;
+  word-break:normal;
+  overflow-wrap:anywhere;
+}
+
+.cardTitle{
+  margin-bottom:5px;
+  padding:2px 6px;
+  border-width:2px;
+  font-size:10px;
+}
+
+.bar{
+  margin:6px 0;
+}
+
+.barTop{
+  font-size:10px;
+  line-height:1.15;
+}
+
+.barTop span:first-child{
+  word-break:normal;
+  overflow-wrap:anywhere;
+}
+
+.track{
+  height:10px;
+  border-width:1px;
+}
+
+.copyBtn,
+.saveBtn,
+#downloadLink{
+  min-height:36px;
+  padding:8px;
+  border-width:2px;
+  font-size:12px;
+}
+
+/* On the result screen, give the card more room and shrink the dialog. */
+body:has(#resultScene:not(.hidden)) .screen{
+  flex-basis:58dvh;
+  height:58dvh;
+  max-height:none;
+}
+
+body:has(#resultScene:not(.hidden)) .dialog{
+  flex:0 0 128px;
+}
+
+body:has(#resultScene:not(.hidden)) .textbox{
+  max-height:45px;
+}
+
+body:has(#resultScene:not(.hidden)) .choices{
+  display:none;
+}
+
+/* Very small or cramped in-app browser heights */
+@media (max-height:700px){
+  .screen{
+    flex-basis:34dvh;
+    height:34dvh;
+    min-height:196px;
+  }
+
+  .textbox{
+    max-height:58px;
+    font-size:12px;
+  }
+
+  .choice{
+    min-height:32px;
+    padding:7px;
+    font-size:11.5px;
+  }
+
+  .roomBtn{
+    height:60px;
+  }
+
+  .roomSmall{
+    font-size:8.5px;
+  }
+
+  body:has(#resultScene:not(.hidden)) .screen{
+    flex-basis:56dvh;
+    height:56dvh;
+  }
+
+  body:has(#resultScene:not(.hidden)) .dialog{
+    flex-basis:112px;
+  }
+}
+/* === Title overlap fix === */
+
+.titleText{
+  top:18px !important;
+  font-size:clamp(21px,6.2vw,27px) !important;
+  line-height:1.22 !important;
+  letter-spacing:0 !important;
+  text-shadow:
+    2px 2px #173b70,
+    -1px -1px #173b70,
+    1px -1px #173b70,
+    -1px 1px #173b70 !important;
+  word-break:keep-all !important;
+  overflow-wrap:normal !important;
+}
+
+.sub{
+  top:106px !important;
+  font-size:11px !important;
+  line-height:1.25 !important;
+}
+
+.building{
+  top:53% !important;
+}
+
+.cross{
+  top:-42px !important;
+}
+
+@media (max-width:360px){
+  .titleText{
+    top:16px !important;
+    font-size:20px !important;
+    line-height:1.24 !important;
+  }
+
+  .sub{
+    top:100px !important;
+    font-size:10.5px !important;
+  }
+
+  .building{
+    top:55% !important;
+  }
+}
+/* === Codex mobile layout fix v2: no tiny textbox scroll === */
+
+.dialog{
+  flex:0 0 auto !important;
+  display:block !important;
+  min-height:0 !important;
+  max-height:none !important;
+  overflow:visible !important;
+  padding:7px !important;
+}
+
+.textbox{
+  max-height:none !important;
+  overflow:visible !important;
+  min-height:0 !important;
+  padding:8px 9px !important;
+  font-size:12.5px !important;
+  line-height:1.42 !important;
+  word-break:keep-all !important;
+  overflow-wrap:break-word !important;
+}
+
+.choices{
+  display:grid !important;
+  flex:0 0 auto !important;
+  overflow:visible !important;
+  max-height:none !important;
+}
+
+.choices:empty{
+  display:none !important;
+  margin:0 !important;
+  padding:0 !important;
+}
+
+.navbar{
+  margin-top:7px !important;
+}
+
+.screen{
+  flex:1 1 auto !important;
+  height:auto !important;
+  min-height:245px !important;
+  max-height:none !important;
+}
+
+.footer{
+  display:none !important;
+}
+
+/* 질문 화면: 선택지가 많아도 한 화면에 들어오도록 버튼을 살짝 압축 */
+.choice{
+  min-height:34px !important;
+  padding:7px 8px !important;
+  font-size:11.8px !important;
+  line-height:1.26 !important;
+  word-break:keep-all !important;
+  overflow-wrap:break-word !important;
+}
+
+/* 선택지가 없는 안내/결과 전 단계는 대화창이 내용만큼만 차지 */
+.dialog:has(.choices:empty) .textbox{
+  min-height:0 !important;
+}
+
+.dialog:has(.choices:empty){
+  padding-bottom:7px !important;
+}
+
+/* 결과 화면에서는 결과지를 크게, 아래 대화창은 짧게 */
+body:has(#resultScene:not(.hidden)) .screen{
+  flex:1 1 auto !important;
+  min-height:0 !important;
+}
+
+body:has(#resultScene:not(.hidden)) .dialog{
+  flex:0 0 auto !important;
+}
+
+body:has(#resultScene:not(.hidden)) .textbox{
+  font-size:11.5px !important;
+  line-height:1.3 !important;
+}
+
+/* 짧은 모바일 화면 대응 */
+@media (max-height:700px){
+  .top{
+    flex-basis:32px !important;
+    height:32px !important;
+    min-height:32px !important;
+  }
+
+  .screen{
+    min-height:210px !important;
+  }
+
+  .textbox{
+    padding:7px 8px !important;
+    font-size:11.5px !important;
+    line-height:1.32 !important;
+  }
+
+  .choice{
+    min-height:30px !important;
+    padding:6px 7px !important;
+    font-size:11px !important;
+    line-height:1.2 !important;
+  }
+
+  .navbar{
+    gap:5px !important;
+    margin-top:6px !important;
+  }
+
+  .navbtn{
+    min-height:31px !important;
+    padding:5px 3px !important;
+    font-size:10.5px !important;
+  }
+}
+/* === Codex mobile stage rebalance v3 === */
+
+/* 화면을 너무 세로로 늘리지 않고, 무대처럼 보이게 재배치 */
+.screen{
+  flex:0 0 58dvh !important;
+  height:58dvh !important;
+  min-height:390px !important;
+  max-height:500px !important;
+}
+
+/* 하단 대화창은 내용만큼만 */
+.dialog{
+  flex:0 0 auto !important;
+}
+
+/* 1. 시작 버튼과 안내 박스 겹침 해결 */
+.startBtn{
+  bottom:74px !important;
+  width:184px !important;
+  min-height:42px !important;
+  padding:9px 12px !important;
+  z-index:4 !important;
+}
+
+.msg{
+  bottom:14px !important;
+  left:14px !important;
+  right:14px !important;
+  padding:8px 10px !important;
+  z-index:3 !important;
+}
+
+/* 타이틀은 조금 위, 병원은 중앙 쪽으로 */
+.titleText{
+  top:18px !important;
+  font-size:clamp(23px,6.4vw,29px) !important;
+  line-height:1.18 !important;
+}
+
+.sub{
+  top:112px !important;
+}
+
+.building{
+  top:50% !important;
+  width:190px !important;
+  height:98px !important;
+}
+
+/* 2. 접수실 가운데가 휑하지 않게: 바닥 길 + 방 버튼을 중간으로 */
+.floor:before{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:110px;
+  bottom:118px;
+  width:76px;
+  transform:translateX(-50%);
+  background:
+    linear-gradient(90deg,#00000010 1px,transparent 1px) 0 0/18px 18px,
+    #c3b68e;
+  border-left:3px solid #7a6241;
+  border-right:3px solid #7a6241;
+  opacity:.75;
+}
+
+.floor:after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:47%;
+  width:132px;
+  height:38px;
+  transform:translate(-50%,-50%);
+  background:#8d5a38;
+  border:3px solid var(--line);
+  border-radius:999px;
+  box-shadow:0 4px #0003;
+  opacity:.85;
+}
+
+.counter{
+  top:28px !important;
+}
+
+.staff{
+  top:84px !important;
+  z-index:3;
+}
+
+.roomGrid{
+  top:auto !important;
+  bottom:16px !important;
+  left:10px !important;
+  right:10px !important;
+  gap:8px !important;
+}
+
+.roomBtn{
+  height:76px !important;
+}
+
+/* 접수실 화면에서는 방 버튼이 너무 아래 붙어 보이지 않게 */
+#hallScene .roomGrid{
+  bottom:18px !important;
+}
+
+/* 상담실도 빈 공간이 덜 느껴지도록 소품 위치 압축 */
+#roomScene .table{
+  bottom:58px !important;
+}
+
+#roomScene .playerRoom{
+  top:61% !important;
+}
+
+#roomScene .roomNpc{
+  top:34% !important;
+}
+
+/* 짧은 모바일 화면에서는 화면 전체를 조금 더 압축 */
+@media (max-height:760px){
+  .screen{
+    flex-basis:54dvh !important;
+    height:54dvh !important;
+    min-height:340px !important;
+  }
+
+  .building{
+    top:49% !important;
+    width:178px !important;
+    height:92px !important;
+  }
+
+  .startBtn{
+    bottom:68px !important;
+  }
+
+  .msg{
+    bottom:10px !important;
+    font-size:10.5px !important;
+  }
+
+  .roomBtn{
+    height:68px !important;
+  }
+
+  .floor:before{
+    top:104px;
+    bottom:104px;
+  }
+}
+
+/* 아주 작은 화면 */
+@media (max-width:360px){
+  .screen{
+    min-height:330px !important;
+  }
+
+  .titleText{
+    font-size:21px !important;
+  }
+
+  .sub{
+    top:104px !important;
+  }
+
+  .startBtn{
+    bottom:66px !important;
+  }
+
+  .roomBtn{
+    height:64px !important;
+  }
+}
+/* === Room background images === */
+
+#hallScene{
+  background:url("./assets/rooms/hall.png") center/cover no-repeat !important;
+}
+
+#hallScene .floor,
+#hallScene .counter{
+  display:none !important;
+}
+
+#roomScene{
+  background-position:center !important;
+  background-size:cover !important;
+  background-repeat:no-repeat !important;
+}
+
+#roomScene.room-clinical{
+  background-image:url("./assets/rooms/clinical.png") !important;
+}
+
+#roomScene.room-nurse{
+  background-image:url("./assets/rooms/nurse.png") !important;
+}
+
+#roomScene.room-social{
+  background-image:url("./assets/rooms/social.png") !important;
+}
+
+#roomScene.room-ot{
+  background-image:url("./assets/rooms/ot.png") !important;
+}
+
+#roomScene .wall,
+#roomScene .wood,
+#roomScene .bookshelf,
+#roomScene .table,
+#roomScene .tableText{
+  display:none !important;
+}
+/* === Hall choice cards in center corridor === */
+
+#hallScene .roomGrid{
+  top:47% !important;
+  bottom:auto !important;
+  left:50% !important;
+  right:auto !important;
+  width:min(88%,390px) !important;
+  transform:translate(-50%,-50%) !important;
+  display:grid !important;
+  grid-template-columns:1fr 1fr !important;
+  gap:10px !important;
+  z-index:5 !important;
+}
+
+#hallScene .roomBtn{
+  height:74px !important;
+  padding:7px 6px !important;
+  background:rgba(255,244,218,.96) !important;
+  backdrop-filter:blur(1px);
+}
+
+#hallScene .roomIcon{
+  font-size:20px !important;
+  margin-bottom:3px !important;
+}
+
+#hallScene .roomSmall{
+  font-size:9.5px !important;
+  line-height:1.16 !important;
+}
+
+/* 접수 직원이 카드와 겹치면 살짝 위로 */
+#hallScene .staff{
+  top:24% !important;
+  z-index:4 !important;
+}

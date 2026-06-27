@@ -1,7 +1,7 @@
-:root{
-  --line:#120b06;
-  --ink:#24170f;
-  --cream:#fff4da;
+:root {
+  --line: #120b06;
+  --ink: #24170f;
+  --cream: #fff4da;
   --paper:#fff8e8;
   --panel:#372417;
   --panel-dark:#20140d;
@@ -15,1888 +15,1747 @@
   --sky:#78bfea;
   --grass:#78b85e;
   --shadow:#0008;
-  --safe-bottom:env(safe-area-inset-bottom,0px);
-}
-
-*{
-  box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent;
-}
-
-html{
-  min-height:100%;
-  background:#15100c;
-}
-
-body{
-  margin:0;
-  min-height:100vh;
-  min-height:100svh;
-  background:
-    linear-gradient(180deg,#15100c,#24170f 48%,#100b08);
-  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  color:var(--ink);
-  overscroll-behavior:none;
-}
-
-button{
-  font:inherit;
-  cursor:pointer;
-  touch-action:manipulation;
-}
-
-.app{
-  width:100%;
-  max-width:460px;
-  min-height:100vh;
-  min-height:100svh;
-  margin:0 auto;
-  padding:8px 8px calc(8px + var(--safe-bottom));
-  background:#20160f;
-}
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --ui-gap: clamp(6px, 1.8vw, 10px);
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  overflow: hidden;
+  background: #15100c;
+}
+
+body {
+  margin: 0;
+  position: fixed;
+  inset: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: var(--ink);
+  overscroll-behavior: none;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.app {
+  width: 100%;
+  max-width: 460px;
+  height: 100dvh;
+  margin: 0 auto;
+  padding: max(4px, env(safe-area-inset-top, 0px)) 4px calc(4px + var(--safe-bottom));
+  overflow: hidden;
+  background: #20160f;
+}
+
+.shell {
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 3px solid #080504;
+  border-radius: 14px;
+  background: #5b3922;
+  box-shadow: 0 18px 36px #000a;
+}
+
+/* 상단바 */
+.top {
+  flex: 0 0 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0 11px;
+  border-bottom: 4px solid var(--line);
+  background: linear-gradient(#7b4c2e, #3a2315);
+  color: #fff5dc;
+  font-weight: 1000;
+  text-shadow: 2px 2px #000;
+  font-size: 13px;
+}
+
+.top span:first-child {
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.badge {
+  flex: 0 0 auto;
+  min-width: 48px;
+  text-align: center;
+  background: #193c73;
+  border: 2px solid #071a34;
+  border-radius: 999px;
+  padding: 3px 6px;
+  font-size: 10px;
+  line-height: 1.1;
+}
+
+/* 상단 게임 화면 무대 */
+.screen {
+  position: relative;
+  flex: 0 0 42dvh;
+  height: 42dvh;
+  min-height: 250px;
+  max-height: 340px;
+  overflow: hidden;
+  background: #80c7ed;
+  image-rendering: pixelated;
+}
 
-.shell{
-  min-height:calc(100vh - 16px - var(--safe-bottom));
-  min-height:calc(100svh - 16px - var(--safe-bottom));
-  display:flex;
-  flex-direction:column;
-  overflow:hidden;
-  border:4px solid #080504;
-  border-radius:18px;
-  background:#5b3922;
-  box-shadow:
-    0 0 0 4px #1b1009,
-    0 18px 36px #000a;
-}
-
-.top{
-  flex:0 0 42px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:8px;
-  padding:0 11px;
-  border-bottom:4px solid var(--line);
-  background:
-    linear-gradient(#7b4c2e,#3a2315);
-  color:#fff5dc;
-  font-weight:1000;
-  text-shadow:2px 2px #000;
-}
-
-.top span:first-child{
-  min-width:0;
-  overflow:hidden;
-  white-space:nowrap;
-  text-overflow:ellipsis;
-}
-
-.badge{
-  flex:0 0 auto;
-  min-width:58px;
-  text-align:center;
-  background:#193c73;
-  border:3px solid #071a34;
-  border-radius:999px;
-  padding:4px 8px;
-  font-size:11px;
-  line-height:1.1;
-}
-
-.screen{
-  position:relative;
-  flex:1 1 auto;
-  min-height:292px;
-  height:clamp(292px,48svh,430px);
-  overflow:hidden;
-  background:#80c7ed;
-  image-rendering:pixelated;
-}
-
-.scene{
-  position:absolute;
-  inset:0;
-}
-
-.hidden{
-  display:none!important;
-}
-
-/* title scene */
-
-.sky{
-  position:absolute;
-  inset:0;
-  background:
-    linear-gradient(var(--sky) 0 52%,var(--grass) 52% 100%);
-}
-
-.cloud{
-  position:absolute;
-  background:#fff;
-  border-radius:999px;
-  opacity:.95;
-  box-shadow:18px 3px 0 #fff,-14px 5px 0 #fff;
-}
-
-.c1{
-  left:28px;
-  top:34px;
-  width:64px;
-  height:18px;
-}
-
-.c2{
-  right:34px;
-  top:70px;
-  width:52px;
-  height:16px;
-}
-
-.building{
-  position:absolute;
-  left:50%;
-  top:45%;
-  transform:translate(-50%,-34%);
-  width:min(210px,58vw);
-  height:108px;
-  background:#d28f55;
-  border:5px solid var(--line);
-  border-radius:8px;
-  box-shadow:0 8px #0004;
-}
-
-.building:before{
-  content:"";
-  position:absolute;
-  left:-16px;
-  right:-16px;
-  top:-35px;
-  height:42px;
-  background:#8c4f2d;
-  border:5px solid var(--line);
-  border-radius:10px;
-}
-
-.cross{
-  position:absolute;
-  left:50%;
-  top:-54px;
-  transform:translateX(-50%);
-  width:42px;
-  height:42px;
-  background:#fff6df;
-  border:5px solid var(--line);
-  border-radius:8px;
-  color:var(--green);
-  text-align:center;
-  line-height:31px;
-  font-size:25px;
-  font-weight:1000;
-}
-
-.door{
-  position:absolute;
-  left:50%;
-  bottom:0;
-  transform:translateX(-50%);
-  width:38px;
-  height:56px;
-  background:#4d2e1b;
-  border:4px solid var(--line);
-  border-bottom:0;
-  border-radius:7px 7px 0 0;
-}
-
-.win{
-  position:absolute;
-  top:42px;
-  width:34px;
-  height:32px;
-  background:#9ed2ff;
-  border:4px solid var(--line);
-  border-radius:4px;
-}
-
-.w1{left:26px}
-.w2{right:26px}
-
-.titleText{
-  position:absolute;
-  left:14px;
-  right:14px;
-  top:22px;
-  margin:0;
-  text-align:center;
-  color:#fff8df;
-  font-size:clamp(25px,8.2vw,34px);
-  line-height:1.08;
-  font-weight:1000;
-  letter-spacing:0;
-  text-shadow:
-    3px 3px #173b70,
-    -2px -2px #173b70,
-    2px -2px #173b70,
-    -2px 2px #173b70;
-}
-
-.sub{
-  position:absolute;
-  left:24px;
-  right:24px;
-  top:102px;
-  margin:0;
-  text-align:center;
-  font-weight:950;
-  color:#173b70;
-  font-size:13px;
-  line-height:1.35;
-}
-
-.startBtn{
-  position:absolute;
-  left:50%;
-  bottom:58px;
-  transform:translateX(-50%);
-  width:min(220px,68vw);
-  min-height:48px;
-  background:#3d2415;
-  color:#fff6df;
-  border:4px solid var(--line);
-  border-radius:9px;
-  padding:12px 14px;
-  font-size:18px;
-  font-weight:1000;
-  box-shadow:0 6px #0005;
-}
-
-.startBtn:active{
-  transform:translate(-50%,3px);
-  box-shadow:0 3px #0005;
-}
-
-.msg{
-  position:absolute;
-  left:16px;
-  right:16px;
-  bottom:10px;
-  margin:0;
-  background:#3d2415;
-  color:#fff6df;
-  border:4px solid var(--line);
-  border-radius:9px;
-  padding:9px 10px;
-  text-align:center;
-  font-size:12px;
-  line-height:1.4;
-  font-weight:850;
-}
-
-/* sprite */
-
-.sprite{
-  position:absolute;
-  width:42px;
-  height:54px;
-  filter:drop-shadow(0 4px #0005);
-}
-
-.head{
-  position:absolute;
-  left:9px;
-  top:2px;
-  width:24px;
-  height:24px;
-  background:#ffd3ad;
-  border:3px solid var(--line);
-  border-radius:6px;
-}
-
-.hair{
-  position:absolute;
-  left:6px;
-  top:0;
-  z-index:2;
-  width:30px;
-  height:14px;
-  background:#4a2b1f;
-  border:3px solid var(--line);
-  border-radius:9px 9px 3px 3px;
-}
-
-.face:before,
-.face:after{
-  content:"";
-  position:absolute;
-  top:11px;
-  z-index:3;
-  width:3px;
-  height:3px;
-  background:var(--line);
-}
-
-.face:before{left:7px}
-.face:after{right:7px}
-
-.body{
-  position:absolute;
-  left:7px;
-  top:27px;
-  width:28px;
-  height:24px;
-  background:#ffc64a;
-  border:3px solid var(--line);
-  border-radius:4px;
-}
-
-.legs:before,
-.legs:after{
-  content:"";
-  position:absolute;
-  top:49px;
-  width:10px;
-  height:8px;
-  background:var(--line);
-}
-
-.legs:before{left:10px}
-.legs:after{right:10px}
-
-/* hall */
-
-.floor{
-  position:absolute;
-  inset:0;
-  background:
-    linear-gradient(90deg,#00000012 1px,transparent 1px) 0 0/32px 32px,
-    linear-gradient(#00000012 1px,transparent 1px) 0 0/32px 32px,
-    #a8b6b8;
-}
-
-.counter{
-  position:absolute;
-  left:16%;
-  right:16%;
-  top:22px;
-  height:68px;
-  background:#8a522e;
-  border:4px solid var(--line);
-  border-radius:5px;
-}
-
-.counter:before{
-  content:"접 수";
-  position:absolute;
-  left:50%;
-  top:-27px;
-  transform:translateX(-50%);
-  background:#9c622f;
-  color:#fff8df;
-  border:3px solid var(--line);
-  border-radius:6px;
-  padding:4px 22px;
-  font-weight:1000;
-  white-space:nowrap;
-}
-
-.staff{
-  left:50%;
-  top:72px;
-  transform:translateX(-50%);
-}
-
-.staff .body{background:#fff}
-
-.roomGrid{
-  position:absolute;
-  left:12px;
-  right:12px;
-  bottom:12px;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:9px;
-}
-
-.roomBtn{
-  position:relative;
-  min-width:0;
-  height:clamp(78px,12.2svh,96px);
-  background:#fff4da;
-  border:4px solid var(--line);
-  border-radius:10px;
-  padding:7px 6px;
-  text-align:center;
-  font-weight:1000;
-  color:var(--ink);
-  box-shadow:0 5px #0004;
-  overflow:hidden;
-}
-
-.roomBtn:before{
-  content:"";
-  position:absolute;
-  left:7px;
-  right:7px;
-  top:7px;
-  height:3px;
-  background:#ffffffb8;
-}
-
-.roomBtn:active{
-  transform:translateY(3px);
-  box-shadow:0 2px #0004;
-}
-
-.roomIcon{
-  display:block;
-  font-size:24px;
-  line-height:1;
-  margin-bottom:4px;
-}
-
-.roomSmall{
-  display:block;
-  margin-top:3px;
-  color:#4b2f1d;
-  font-size:10.5px;
-  line-height:1.22;
-  word-break:keep-all;
-}
-
-.recommended{
-  outline:5px solid #ffd84f;
-  background:#fff0bd;
-}
-
-.secondaryMark{
-  outline:5px solid #9ed2ff;
-  background:#eef7ff;
-}
-
-/* room */
-
-.wall{
-  position:absolute;
-  left:0;
-  right:0;
-  top:0;
-  height:43%;
-  background:
-    linear-gradient(90deg,#00000008 1px,transparent 1px) 0 0/28px 28px,
-    #ead4a9;
-  border-bottom:5px solid #6b4428;
-}
-
-.wood{
-  position:absolute;
-  left:0;
-  right:0;
-  bottom:0;
-  top:43%;
-  background:
-    linear-gradient(90deg,#00000012 1px,transparent 1px) 0 0/32px 32px,
-    linear-gradient(#00000012 1px,transparent 1px) 0 0/32px 32px,
-    #b98d5d;
-}
-
-.bookshelf{
-  position:absolute;
-  right:20px;
-  top:52px;
-  width:74px;
-  height:112px;
-  background:#6b4428;
-  border:4px solid var(--line);
-  border-radius:5px;
-}
-
-.bookshelf:before{
-  content:"";
-  position:absolute;
-  left:8px;
-  right:8px;
-  top:16px;
-  height:11px;
-  background:#60a2d8;
-  box-shadow:0 26px #e0aa39,0 52px #9c6bc9,0 78px #4e9b43;
-}
-
-.table{
-  position:absolute;
-  left:18px;
-  bottom:54px;
-  width:min(216px,55vw);
-  height:70px;
-  background:#8b5a35;
-  border:4px solid var(--line);
-  border-radius:7px;
-}
-
-.tableText{
-  position:absolute;
-  left:24px;
-  bottom:78px;
-  width:min(204px,52vw);
-  color:#fff8e8;
-  font-size:10.5px;
-  font-weight:1000;
-  text-align:center;
-  line-height:1.25;
-  word-break:keep-all;
-}
-
-.roomNpc{
-  left:54%;
-  top:34%;
-}
-
-.roomNpc .body{background:#fff}
-.nurseBody .body{background:#bdf1e8}
-.socialBody .body{background:#20385d}
-.otBody .body{background:#6ba56b}
-
-.playerRoom{
-  left:22%;
-  top:62%;
-}
-
-/* result */
-
-.paperBg{
-  position:absolute;
-  inset:0;
-  padding:10px;
-  background:
-    linear-gradient(90deg,#0000000a 1px,transparent 1px) 0 0/20px 20px,
-    linear-gradient(#f7e7be,#e7bf7e);
-}
-
-.paper{
-  position:relative;
-  height:100%;
-  overflow:auto;
-  -webkit-overflow-scrolling:touch;
-  background:#fff4da;
-  border:5px solid var(--line);
-  border-radius:12px;
-  padding:12px;
-  box-shadow:inset 0 0 0 3px #ffffff73;
-}
-
-.paper:before{
-  content:"QUEST CLEAR";
-  display:block;
-  margin:0 auto 8px;
-  width:max-content;
-  max-width:100%;
-  padding:5px 12px;
-  background:#173b70;
-  color:#fff8df;
-  border:3px solid var(--line);
-  border-radius:6px;
-  font-size:11px;
-  font-weight:1000;
-  text-shadow:1px 1px #000;
-}
-
-.paper h2{
-  margin:4px 0 10px;
-  text-align:center;
-  color:#23170f;
-  font-size:20px;
-  line-height:1.2;
-  font-weight:1000;
-}
-
-#shareCard{
-  display:grid;
-  gap:9px;
-}
-
-.course,
-.reason,
-.evidence{
-  position:relative;
-  margin:0;
-  border:3px solid var(--line);
-  border-radius:8px;
-  padding:10px;
-  color:#21150d;
-  line-height:1.5;
-  font-size:13px;
-  font-weight:850;
-  word-break:keep-all;
-  box-shadow:0 3px #0002;
-}
-
-.course{
-  background:#fff0c2;
-}
-
-.reason{
-  background:#eef6ff;
-}
-
-.evidence{
-  background:#f7e7ff;
-}
-
-.cardTitle{
-  display:inline-block;
-  margin:0 0 7px;
-  padding:3px 7px;
-  background:#3a2517;
-  color:#fff4da;
-  border:2px solid var(--line);
-  border-radius:5px;
-  font-size:12px;
-  line-height:1.1;
-  font-weight:1000;
-}
-
-.bar{
-  margin:8px 0;
-}
-
-.barTop{
-  display:flex;
-  align-items:flex-end;
-  justify-content:space-between;
-  gap:8px;
-  margin-bottom:3px;
-  font-weight:1000;
-  font-size:11.5px;
-  line-height:1.25;
-}
-
-.barTop span:first-child{
-  min-width:0;
-  word-break:keep-all;
-}
-
-.track{
-  height:13px;
-  overflow:hidden;
-  background:#dcc28e;
-  border:2px solid var(--line);
-  border-radius:999px;
-}
-
-.fill{
-  height:100%;
-}
-
-.copyBtn,
-.saveBtn,
-#downloadLink{
-  width:100%;
-  min-height:44px;
-  color:#fff;
-  border:3px solid var(--line);
-  border-radius:8px;
-  padding:10px;
-  font-weight:1000;
-  text-align:center;
-  text-decoration:none;
-  box-shadow:0 4px #0004;
-}
-
-.copyBtn,
-.saveBtn{
-  margin-top:9px;
-}
-
-.copyBtn{
-  background:#d76b83;
-}
-
-.saveBtn{
-  background:#2f70b7;
-}
-
-#downloadLink{
-  display:none;
-  margin-top:8px;
-  background:#4d9a45;
-}
-
-/* dialog */
-
-.dialog{
-  flex:0 0 auto;
-  min-height:230px;
-  max-height:43svh;
-  overflow:auto;
-  -webkit-overflow-scrolling:touch;
-  background:
-    linear-gradient(#432b1b,#2e1d12);
-  border-top:4px solid var(--line);
-  padding:9px 9px 10px;
-  color:#fff3dc;
-}
-
-.progressBox{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  margin-bottom:7px;
-}
-
-.progressLabel{
-  min-width:54px;
-  color:#fff3dc;
-  font-size:11px;
-  font-weight:1000;
-}
-
-.progressTrack{
-  flex:1;
-  height:12px;
-  overflow:hidden;
-  background:#20140d;
-  border:2px solid #070402;
-  border-radius:999px;
-}
-
-.progressFill{
-  height:100%;
-  width:0;
-  background:linear-gradient(90deg,#ffd84f,#9ed2ff);
-}
-
-.speaker{
-  margin-bottom:6px;
-  color:var(--gold);
-  font-weight:1000;
-  text-shadow:1px 1px #000;
-}
-
-.textbox{
-  min-height:68px;
-  background:#fff4da;
-  color:#23170f;
-  border:4px solid var(--line);
-  border-radius:8px;
-  padding:10px;
-  line-height:1.5;
-  font-size:14px;
-  font-weight:850;
-  white-space:pre-line;
-  word-break:keep-all;
-  animation:pop .16s ease-out;
-}
-
-@keyframes pop{
-  from{transform:translateY(4px);opacity:.75}
-  to{transform:translateY(0);opacity:1}
-}
-
-.choices{
-  display:grid;
-  gap:8px;
-  margin-top:9px;
-}
-
-.choice{
-  width:100%;
-  min-height:44px;
-  background:#fff4da;
-  color:#23170f;
-  border:3px solid var(--line);
-  border-radius:8px;
-  padding:10px 9px;
-  text-align:left;
-  font-size:13.5px;
-  line-height:1.35;
-  font-weight:900;
-  word-break:keep-all;
-  box-shadow:0 4px #0006;
-}
-
-.choice:active{
-  transform:translateY(3px);
-  box-shadow:0 1px #0006;
-}
-
-.navbar{
-  display:grid;
-  grid-template-columns:1fr 1fr 1fr;
-  gap:7px;
-  margin-top:9px;
-}
-
-.navbtn{
-  min-width:0;
-  min-height:40px;
-  background:#e9cf94;
-  color:#23170f;
-  border:3px solid var(--line);
-  border-radius:8px;
-  padding:8px 4px;
-  font-size:12px;
-  font-weight:1000;
-  box-shadow:0 3px #0005;
-}
-
-.navbtn:disabled{
-  opacity:.45;
-}
-
-.footer{
-  flex:0 0 auto;
-  background:#3a2517;
-  color:#fff3dc;
-  border-top:4px solid var(--line);
-  padding:8px 10px calc(8px + var(--safe-bottom));
-  font-size:10.5px;
-  line-height:1.45;
-}
-
-/* modal */
-
-.modal{
-  position:fixed;
-  inset:0;
-  z-index:99;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:16px;
-  background:#0008;
-}
-
-.modalCard{
-  width:100%;
-  max-width:420px;
-  max-height:82svh;
-  overflow:auto;
-  background:#fff4da;
-  border:5px solid var(--line);
-  border-radius:12px;
-  padding:14px;
-  color:#23170f;
-  box-shadow:0 12px 30px #0009;
-}
-
-.modalCard h3{
-  margin:0 0 10px;
-  text-align:center;
-}
-
-.historyList{
-  max-height:50svh;
-  overflow:auto;
-  line-height:1.6;
-  font-weight:850;
-}
-
-.closeBtn{
-  width:100%;
-  min-height:44px;
-  margin-top:12px;
-  background:#3a2517;
-  color:#fff4da;
-  border:3px solid var(--line);
-  border-radius:8px;
-  padding:10px;
-  font-weight:1000;
-}
-
-/* compact phones */
-
-@media (max-width:360px){
-  .app{
-    padding:6px 6px calc(6px + var(--safe-bottom));
+.scene {
+  position: absolute;
+  inset: 0;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* =========================================================
+   1. Title Scene (첫 화면 정밀 셋팅)
+========================================================= */
+#titleScene:not(.hidden) {
+  position: absolute !important;
+  inset: 0 !important;
+  display: block !important;
+  background: linear-gradient(#82d4ff 0 50%, #ffe7b2 50% 100%) !important;
+  z-index: 10 !important;
+}
+
+.titleHero {
+  position: absolute !important;
+  top: 30px !important;
+  left: 10px !important;
+  right: 10px !important;
+  text-align: center !important;
+  color: #fff !important;
+  text-shadow: 2px 2px 0 #173e78, -2px -2px 0 #173e78, 2px -2px 0 #173e78, -2px 2px 0 #173e78 !important;
+  z-index: 15 !important;
+}
+
+.titleKicker {
+  margin: 0 0 2px !important;
+  font-size: 16px !important;
+  font-weight: 900 !important;
+}
+
+.titleHero h1 {
+  margin: 0 !important;
+  font-size: clamp(22px, 6.5vw, 27px) !important;
+  line-height: 1.2 !important;
+  font-weight: 900 !important;
+}
+
+.titleSub {
+  margin: 5px 0 0 !important;
+  color: #1d2440 !important;
+  text-shadow: none !important;
+  font-size: 11.5px !important;
+  font-weight: 800 !important;
+}
+
+.titleLineup {
+  position: absolute !important;
+  left: 50% !important;
+  top: 48% !important;
+  transform: translate(-50%, -50%) !important;
+  width: 90% !important;
+  max-width: 310px !important;
+  height: auto !important;
+  object-fit: contain !important;
+  z-index: 14 !important;
+  display: block !important;
+  filter: drop-shadow(0 6px 0 rgba(0, 0, 0, 0.22)) !important;
+}
+
+.titleRoles {
+  position: absolute !important;
+  left: 10px !important;
+  right: 10px !important;
+  bottom: 68px !important;
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 5px !important;
+  z-index: 16 !important;
+}
+
+.role {
+  padding: 5px 2px !important;
+  border: 2px solid #111 !important;
+  border-radius: 6px !important;
+  color: #24170f !important;
+  font-size: 10.5px !important;
+  font-weight: 900 !important;
+  text-align: center !important;
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.2);
+}
+
+.roleClinical { background: #f4daf8 !important; }
+.roleSocial { background: #e1f3c4 !important; }
+.roleNurse { background: #ffd6d6 !important; }
+.roleOt { background: #d9ecff !important; }
+
+.startBtn {
+  position: absolute !important;
+  left: 50% !important;
+  bottom: 14px !important;
+  transform: translateX(-50%) !important;
+  width: 160px !important;
+  min-height: 38px !important;
+  padding: 8px 12px !important;
+  border: 3px solid #130b05 !important;
+  border-radius: 9px !important;
+  background: linear-gradient(#ffe36b, #f4b729) !important;
+  color: #2a1605 !important;
+  font-size: 15px !important;
+  font-weight: 900 !important;
+  box-shadow: 0 4px 0 #4b2a0c !important;
+  z-index: 20 !important;
+  display: block !important;
+}
+
+.startBtn:active {
+  transform: translate(-50%, 2px) !important;
+  box-shadow: 0 2px 0 #4b2a0c !important;
+}
+
+#titleScene.hidden,
+#titleScene.hidden .titleHero,
+#titleScene.hidden .titleLineup,
+#titleScene.hidden .titleRoles,
+#titleScene.hidden .titleStart,
+.titleNpcRow, .msg {
+  display: none !important;
+}
+
+/* =========================================================
+   2. Hall & Room Backgrounds (그래픽 및 룸 카드 최적화)
+========================================================= */
+#hallScene {
+  background: url("./assets/rooms/hall.png") center/cover no-repeat !important;
+}
+
+#hallScene .floor, #hallScene .counter, .staff {
+  display: none !important;
+}
+
+#hallScene .roomGrid {
+  position: absolute !important;
+  bottom: 12px !important;
+  left: 50% !important;
+  width: 92% !important;
+  transform: translateX(-50%) !important;
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 6px !important;
+  z-index: 6 !important;
+}
+
+#hallScene .roomBtn {
+  height: 58px !important;
+  padding: 4px 6px !important; /* 위아래 패딩을 줄여 내부 공간 확보 */
+  border: 3px solid var(--line) !important;
+  border-radius: 8px !important;
+  background: rgba(255, 244, 218, 0.96) !important;
+  backdrop-filter: blur(1px);
+  text-align: center;
+  font-weight: 1000;
+  box-shadow: 0 4px #0005 !important;
+  
+  /* [핵심 추가] 글씨가 수직 정렬을 유지하며 유연하게 배치되도록 플렉스박스 적용 */
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+  overflow: hidden !important;
+}
+
+#hallScene .roomIcon {
+  display: block;
+  font-size: 14px !important; /* 이모지 크기를 아주 살짝 압축 */
+  margin-bottom: 0px !important; /* 아이콘과 텍스트 사이 간격 최소화 */
+  line-height: 1 !important;
+}
+
+/* 방 이름 텍스트 (예: 임상심리실 등) */
+#hallScene .roomBtn text, 
+#hallScene .roomBtn {
+  font-size: 11.5px !important;
+  line-height: 1.2 !important;
+}
+
+#hallScene .roomSmall {
+  display: -webkit-box !important;
+  -webkit-line-clamp: 1 !important; /* [중요] 모바일 좁은 화면에서 텍스트가 넘치면 한 줄만 보여주고 자르기 */
+  -webkit-box-orient: vertical;
+  overflow: hidden !important;
+  font-size: 8px !important; /* 가독성을 해치지 않는 선에서 폰트 스케일 압축 */
+  line-height: 1.1 !important;
+  color: #4b2f1d;
+  margin-top: 1px !important;
+  width: 100% !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+.recommended { outline: 3px solid #ffd84f !important; background: #fff0bd !important; }
+.secondaryMark { outline: 3px solid #9ed2ff !important; background: #eef7ff !important; }
+
+/* 상담실 전용 설정 */
+#roomScene {
+  background-position: center !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+}
+#roomScene.room-clinical { background-image: url("./assets/rooms/clinical.png") !important; }
+#roomScene.room-nurse { background-image: url("./assets/rooms/nurse.png") !important; }
+#roomScene.room-social { background-image: url("./assets/rooms/social.png") !important; }
+#roomScene.room-ot { background-image: url("./assets/rooms/ot.png") !important; }
+
+#roomScene .wall, #roomScene .wood, #roomScene .bookshelf, #roomScene .table, #roomScene .tableText, .roomNpc, .playerRoom {
+  display: none !important;
+}
+
+.roomNpcImg {
+  position: absolute !important;
+  right: 8px !important;
+  bottom: 4px !important;
+  width: 32% !important;
+  max-width: 135px !important;
+  max-height: 205px !important;
+  object-fit: contain !important;
+  z-index: 8 !important;
+  filter: drop-shadow(4px 5px 0 rgba(0,0,0,0.24)) !important;
+}
+
+body:has(#roomScene:not(.hidden)) .screen {
+  flex: 0 0 43dvh !important;
+  height: 43dvh !important;
+  min-height: 275px !important;
+}
+
+/* =========================================================
+   3. Dialog & Choices System (하단 대화창 고정 메커니즘)
+========================================================= */
+.dialog {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+  background: linear-gradient(#432b1b, #2e1d12);
+  border-top: 3px solid var(--line) !important;
+  padding: 6px 7px !important;
+}
+
+.progressBox, .speaker, .textbox {
+  flex: 0 0 auto !important;
+}
+
+.progressBox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 5px;
+}
+
+.progressLabel {
+  min-width: 46px;
+  color: #fff3dc;
+  font-size: 10px;
+  font-weight: 1000;
+}
+
+.progressTrack {
+  flex: 1;
+  height: 10px;
+  overflow: hidden;
+  background: #20140d;
+  border: 2px solid #070402;
+  border-radius: 999px;
+}
+
+.progressFill {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, #ffd84f, #9ed2ff);
+}
+
+.speaker {
+  margin-bottom: 4px;
+  color: var(--gold);
+  font-weight: 1000;
+  font-size: 13px;
+  text-shadow: 1px 1px #000;
+}
+
+.textbox {
+  background: #fff4da;
+  color: #23170f;
+  border: 3px solid var(--line) !important;
+  border-radius: 9px !important;
+  padding: 8px 9px !important;
+  font-size: 12px !important;
+  line-height: 1.32 !important;
+  white-space: pre-line;
+  word-break: keep-all !important;
+  overflow-wrap: break-word !important;
+}
+
+.choices {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  overflow-y: auto !important;
+  gap: 6px !important;
+  margin-top: 6px !important;
+  padding-bottom: 6px !important;
+}
+
+.choices:empty {
+  display: none !important;
+}
+
+.choice {
+  width: 100%;
+  min-height: 34px !important;
+  background: #fff4da;
+  color: #23170f;
+  border: 2px solid var(--line) !important;
+  border-radius: 7px !important;
+  padding: 7px 8px !important;
+  text-align: left;
+  font-size: 11.5px !important;
+  line-height: 1.22 !important;
+  font-weight: 900;
+  box-shadow: 0 4px #0006;
+}
+
+.choice:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px #0006;
+}
+
+.navbar {
+  flex: 0 0 auto !important;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 6px !important;
+  margin-top: 6px !important;
+}
+
+.navbtn {
+  min-height: 31px !important;
+  background: #e9cf94;
+  color: #23170f;
+  border: 2px solid var(--line) !important;
+  border-radius: 8px !important;
+  padding: 5px 3px !important;
+  font-size: 10.5px !important;
+  font-weight: 1000;
+}
+
+.navbtn:disabled { opacity: 0.45; }
+.footer { display: none !important; }
+
+/* =========================================================
+   4. Result Screen Design (결과지 및 카드 고도화)
+========================================================= */
+body:has(#resultScene:not(.hidden)) .screen {
+  flex: 1 1 auto !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+}
+
+body:has(#resultScene:not(.hidden)) .dialog {
+  flex: 0 0 auto !important;
+  padding: 6px 7px !important;
+}
+
+body:has(#resultScene:not(.hidden)) .progressBox,
+body:has(#resultScene:not(.hidden)) .speaker,
+body:has(#resultScene:not(.hidden)) .choices {
+  display: none !important;
+}
+
+body:has(#resultScene:not(.hidden)) .textbox {
+  padding: 7px 9px !important;
+  font-size: 11px !important;
+  line-height: 1.25 !important;
+}
+
+.paperBg {
+  position: absolute;
+  inset: 0;
+  padding: 6px !important;
+  background: linear-gradient(#f7e7be, #e7bf7e);
+}
+
+.paper {
+  position: relative;
+  height: 100%;
+  overflow-y: auto;
+  background: linear-gradient(180deg, #fff9ea 0%, #fff1d3 100%) !important;
+  border: 3px solid var(--line) !important;
+  border-radius: 12px !important;
+  padding: 10px !important;
+}
+
+.paper:before {
+  content: "RESULT" !important;
+  display: block;
+  margin: 0 auto 5px;
+  width: max-content;
+  padding: 3px 9px;
+  background: #173b70;
+  color: #fff8df;
+  border: 2px solid var(--line);
+  border-radius: 6px;
+  font-size: 9px;
+  font-weight: 1000;
+}
+
+.resultHero {
+  text-align: center !important;
+  padding: 6px 4px 10px !important;
+}
+
+.resultHero h2 {
+  margin: 0 !important;
+  font-size: clamp(17px, 5vw, 21px) !important;
+  line-height: 1.18 !important;
+  color: #24170f !important;
+}
+
+.resultSub {
+  margin: 8px auto 0 !important;
+  color: #3b2a1a !important;
+  font-size: 13px !important;
+  line-height: 1.45 !important;
+  font-weight: 850 !important;
+}
+
+.resultShareCard {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 10px !important;
+}
+
+.resultMainCard, .resultNpcCard, .resultNotice, .reason, .evidence {
+  position: relative !important;
+  border: 3px solid var(--line) !important;
+  border-radius: 12px !important;
+  padding: 12px !important;
+  color: #21150d !important;
+  line-height: 1.45 !important;
+  font-size: clamp(11.8px, 3.35vw, 13px) !important;
+  box-shadow: 0 4px #0002, inset 0 0 0 2px #ffffff80 !important;
+  overflow-wrap: break-word !important;
+}
+
+.resultMainCard { background: linear-gradient(180deg, #fff7dc, #ffe9b6) !important; }
+.resultNpcCard { background: linear-gradient(180deg, #fbf4ff, #fff7ea) !important; text-align: center !important; }
+.reason { background: linear-gradient(180deg, #f3f9ff, #e5f2ff) !important; }
+.evidence { background: linear-gradient(180deg, #fff4ff, #f3e6ff) !important; }
+.resultNotice { background: #fff8e8 !important; }
+
+.resultRank { color: #4b2f1d !important; font-size: 13px !important; font-weight: 1000 !important; }
+.resultExpertName { margin: 5px 0 7px !important; font-size: 20px !important; font-weight: 1000 !important; }
+.resultSubExpert { margin: 5px 0 7px !important; font-size: 16px !important; font-weight: 1000 !important; }
+.resultDivider { height: 1px !important; margin: 12px 0 !important; border-top: 2px dashed #d8bf8d !important; }
+
+.speechBubble {
+  display: inline-block !important;
+  position: relative !important;
+  margin: 0 auto 10px !important;
+  padding: 8px 12px !important;
+  border: 2px solid #ccb183 !important;
+  border-radius: 12px !important;
+  background: #fff8ef !important;
+  font-size: 13px !important;
+  font-weight: 900 !important;
+}
+
+.speechBubble::after {
+  content: "" !important;
+  position: absolute !important;
+  right: 30px !important;
+  bottom: -8px !important;
+  width: 14px !important;
+  height: 14px !important;
+  background: #fff8ef !important;
+  border-right: 2px solid #ccb183 !important;
+  border-bottom: 2px solid #ccb183 !important;
+  transform: rotate(45deg) !important;
+}
+
+.resultNpcImg {
+  display: block !important;
+  width: 78% !important;
+  max-width: 260px !important;
+  margin: 8px auto 10px !important;
+  object-fit: contain !important;
+  filter: drop-shadow(6px 8px 0 rgba(0,0,0,0.25)) !important;
+}
+
+.resultNpcName { font-size: 19px !important; font-weight: 1000 !important; margin-top: 6px !important; }
+.cardTitle { display: block !important; width: max-content; margin: 0 0 7px !important; border-radius: 999px !important; padding: 4px 8px !important; background: #3a2517; color: #fff4da; font-size: 11px; font-weight: 1000; }
+
+.bar { margin: 7px 0 !important; }
+.barTop { display: flex; align-items: center; justify-content: space-between; gap: 10px !important; font-size: 11px; font-weight: 1000; }
+.track { height: 12px !important; overflow: hidden; background: #ead5a7 !important; border: 2px solid var(--line) !important; border-radius: 999px; }
+.fill { height: 100%; }
+
+.copyBtn, .saveBtn, #downloadLink {
+  width: 100%;
+  min-height: 40px !important;
+  color: #fff;
+  border: 3px solid var(--line) !important;
+  border-radius: 9px !important;
+  padding: 9px 10px !important;
+  font-weight: 1000;
+  text-align: center;
+  text-decoration: none;
+}
+.copyBtn { background: #d76b83; margin-top: 9px; }
+.saveBtn { background: #2f70b7; margin-top: 9px; }
+#downloadLink { display: none; margin-top: 8px; background: #4d9a45; }
+
+@media (min-width: 430px) {
+  .resultShareCard { grid-template-columns: 1fr 1fr !important; align-items: stretch !important; }
+  .resultMainCard { grid-column: 1 !important; }
+  .resultNpcCard { grid-column: 2 !important; grid-row: 1 / span 2 !important; }
+  .resultNotice { grid-column: 1 / -1 !important; }
+}
+
+/* =========================================================
+   5. Modal Popup (선택 내역 팝업 디자인)
+========================================================= */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: #0008;
+}
+
+.modalCard {
+  width: 100%;
+  max-width: 420px;
+  max-height: 82svh;
+  overflow-y: auto;
+  background: #fff4da;
+  border: 5px solid var(--line);
+  border-radius: 12px;
+  padding: 14px;
+  color: #23170f;
+  box-shadow: 0 12px 30px #0009;
+}
+
+.modalCard h3 { margin: 0 0 10px; text-align: center; font-weight: 1000; }
+.historyList { max-height: 50svh; overflow-y: auto; line-height: 1.6; font-weight: 850; font-size: 13px; }
+.closeBtn { width: 100%; min-height: 44px; margin-top: 12px; background: #3a2517; color: #fff4da; border: 3px solid var(--line); border-radius: 8px; font-weight: 1000; }
+/* === Title page rebuild === */
+
+#titleScene {
+  position: relative;
+  overflow: hidden;
+}
+
+.titleBg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.titleHero,
+.titleLineup,
+.titleRoles,
+.titleStart,
+.titleNote {
+  position: absolute;
+  z-index: 2;
+}
+
+.titleHero {
+  top: 7%;
+  left: 5%;
+  right: 5%;
+  text-align: center;
+}
+
+.titleKicker {
+  margin: 0 0 4px;
+  color: #fff;
+  font-size: clamp(22px, 6vw, 38px);
+  font-weight: 900;
+  text-shadow: 0 3px 0 #173e78, 2px 0 0 #173e78, -2px 0 0 #173e78;
+}
+
+.titleHero h1 {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(34px, 9vw, 62px);
+  line-height: 1.05;
+  font-weight: 900;
+  text-shadow: 0 4px 0 #173e78, 2px 0 0 #173e78, -2px 0 0 #173e78;
+}
+
+.titleSub {
+  margin: 12px 0 0;
+  color: #1d2440;
+  font-size: clamp(14px, 3.6vw, 22px);
+  font-weight: 800;
+}
+
+.titleLineup {
+  left: 50%;
+  bottom: 31%;
+  width: min(96%, 620px);
+  height: auto;
+  transform: translateX(-50%);
+  filter: drop-shadow(0 6px 0 rgba(0, 0, 0, 0.22));
+}
+
+.titleRoles {
+  left: 4%;
+  right: 4%;
+  bottom: 22%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+
+.role {
+  padding: 7px 4px;
+  border: 2px solid #111;
+  border-radius: 8px;
+  color: #24170d;
+  font-size: clamp(11px, 3vw, 16px);
+  font-weight: 900;
+  text-align: center;
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.28);
+}
+
+.roleClinical { background: #f4daf8; }
+.roleSocial { background: #e1f3c4; }
+.roleNurse { background: #ffd6d6; }
+.roleOt { background: #d9ecff; }
+
+.titleStart {
+  left: 50%;
+  bottom: 10%;
+  transform: translateX(-50%);
+  width: min(70%, 360px);
+  padding: 14px 18px;
+  border: 3px solid #130b05;
+  border-radius: 12px;
+  background: linear-gradient(#ffe36b, #f4b729);
+  color: #2a1605;
+  font-size: clamp(20px, 5.5vw, 34px);
+  font-weight: 900;
+  box-shadow: 0 5px 0 #4b2a0c;
+}
+
+.titleNote {
+  left: 8%;
+  right: 8%;
+  bottom: 2%;
+  padding: 9px 10px;
+  border: 2px solid #8c6a35;
+  border-radius: 8px;
+  background: rgba(255, 247, 221, 0.92);
+  color: #3a210c;
+  font-size: clamp(12px, 3.2vw, 16px);
+  font-weight: 800;
+  text-align: center;
+}
+
+@media (max-width: 520px) {
+  .titleHero {
+    top: 6%;
   }
 
-  .shell{
-    border-radius:14px;
+  .titleLineup {
+    bottom: 33%;
+    width: 104%;
   }
 
-  .top{
-    height:38px;
-    padding:0 9px;
+  .titleRoles {
+    bottom: 24%;
+    left: 3%;
+    right: 3%;
+    gap: 4px;
   }
 
-  .screen{
-    min-height:270px;
-    height:44svh;
+  .titleStart {
+    bottom: 11%;
+    width: 74%;
   }
 
-  .titleText{
-    font-size:25px;
-    top:19px;
-  }
-
-  .sub{
-    top:93px;
-    font-size:12px;
-  }
-
-  .building{
-    width:184px;
-    height:98px;
-  }
-
-  .startBtn{
-    bottom:52px;
-    min-height:44px;
-    font-size:16px;
-  }
-
-  .msg{
-    left:12px;
-    right:12px;
-    font-size:11.5px;
-  }
-
-  .roomGrid{
-    left:9px;
-    right:9px;
-    gap:7px;
-  }
-
-  .roomBtn{
-    height:78px;
-    padding:6px 4px;
-  }
-
-  .roomIcon{
-    font-size:21px;
-  }
-
-  .roomSmall{
-    font-size:9.5px;
-  }
-
-  .dialog{
-    min-height:224px;
-    padding:8px;
-  }
-
-  .textbox,
-  .choice{
-    font-size:13px;
-  }
-
-  .course,
-  .reason,
-  .evidence{
-    font-size:12.5px;
+  .titleNote {
+    bottom: 2%;
   }
 }
+/* === Title page mobile layout fix === */
 
-/* taller phones */
+body:has(#titleScene:not(.hidden)) .screen {
+  flex: 0 0 64dvh !important;
+  height: 64dvh !important;
+  min-height: 500px !important;
+  max-height: none !important;
+}
 
-@media (min-height:820px){
-  .screen{
-    height:50svh;
+body:has(#titleScene:not(.hidden)) .dialog {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+body:has(#titleScene:not(.hidden)) .textbox {
+  flex: 0 0 auto !important;
+}
+
+body:has(#titleScene:not(.hidden)) .navbar {
+  margin-top: auto !important;
+}
+/* === Title page position override === */
+
+body:has(#titleScene:not(.hidden)) .screen {
+  flex: 0 0 66dvh !important;
+  height: 66dvh !important;
+  min-height: 500px !important;
+  max-height: none !important;
+}
+
+body:has(#titleScene:not(.hidden)) .dialog {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+body:has(#titleScene:not(.hidden)) .textbox {
+  flex: 0 0 auto !important;
+}
+
+body:has(#titleScene:not(.hidden)) .navbar {
+  margin-top: auto !important;
+}
+
+body:has(#titleScene:not(.hidden)) .titleHero {
+  top: 5% !important;
+}
+
+body:has(#titleScene:not(.hidden)) .titleLineup {
+  bottom: 32% !important;
+  width: min(108%, 680px) !important;
+}
+
+body:has(#titleScene:not(.hidden)) .titleRoles {
+  bottom: 23% !important;
+}
+
+body:has(#titleScene:not(.hidden)) .titleStart {
+  bottom: 12% !important;
+  width: min(74%, 360px) !important;
+  z-index: 8 !important;
+}
+
+body:has(#titleScene:not(.hidden)) .titleNote {
+  bottom: 2.5% !important;
+  z-index: 7 !important;
+}
+body:has(#titleScene:not(.hidden)) .titleLineup {
+  bottom: 27% !important;
+  width: min(104%, 660px) !important;
+}
+
+body:has(#titleScene:not(.hidden)) .titleStart {
+  bottom: 19% !important;
+  z-index: 9 !important;
+}
+
+body:has(#titleScene:not(.hidden)) .titleNote {
+  bottom: 3% !important;
+}
+/* === Room NPC manual tuning === */
+
+#roomScene .roomNpcImg {
+  position: absolute !important;
+  z-index: 8 !important;
+  object-fit: contain !important;
+  object-position: bottom center !important;
+  max-width: none !important;
+
+  filter:
+    drop-shadow(0 0 1px rgba(255, 255, 245, 1))
+    drop-shadow(0 0 4px rgba(255, 250, 220, 1))
+    drop-shadow(0 0 9px rgba(255, 232, 160, 0.85))
+    drop-shadow(2px 3px 0 rgba(0, 0, 0, 0.42))
+    drop-shadow(0 9px 12px rgba(0, 0, 0, 0.28));
+}
+
+/* 임상심리실 */
+#roomScene.room-clinical .roomNpcImg {
+  right: 1% !important;
+  bottom: -30px !important;
+  width: 60% !important;
+  min-width: 145px !important;
+  max-width: none !important;
+}
+
+/* 간호실 */
+#roomScene.room-nurse .roomNpcImg {
+  right: 1.5% !important;
+  bottom: -10px !important;
+  width: 41% !important;
+  min-width: 140px !important;
+  max-width: none !important;
+}
+
+/* 사회사업실 */
+#roomScene.room-social .roomNpcImg {
+  right: 1.5% !important;
+  bottom: -20px !important;
+  width: 47% !important;
+  min-width: 140px !important;
+  max-width: none !important;
+}
+
+/* 작업치료실 */
+#roomScene.room-ot .roomNpcImg {
+  right: 1.5% !important;
+  bottom: -15px !important;
+  width: 41% !important;
+  min-width: 140px !important;
+  max-width: none !important;
+}
+
+@media (max-width: 520px) {
+  /* 임상심리실 모바일 */
+  #roomScene.room-clinical .roomNpcImg {
+    right: 1% !important;
+    bottom: -30px !important;
+    width: 60% !important;
+    min-width: 145px !important;
+    max-width: none !important;
   }
 
-  .dialog{
-    max-height:40svh;
-  }
-}
-
-/* landscape and short in-app browser */
-
-@media (max-height:680px){
-  .screen{
-    min-height:245px;
-    height:42svh;
+  /* 간호실 모바일 */
+  #roomScene.room-nurse .roomNpcImg {
+    right: 1.5% !important;
+    bottom: -10px !important;
+    width: 41% !important;
+    min-width: 140px !important;
+    max-width: none !important;
   }
 
-  .dialog{
-    min-height:210px;
-    max-height:46svh;
+  /* 사회사업실 모바일 */
+  #roomScene.room-social .roomNpcImg {
+    right: 1.5% !important;
+    bottom: -20px !important;
+    width: 47% !important;
+    min-width: 140px !important;
+    max-width: none !important;
   }
 
-  .titleText{
-    top:16px;
-  }
-
-  .sub{
-    top:88px;
-  }
-
-  .building{
-    top:48%;
-    height:92px;
-  }
-
-  .startBtn{
-    bottom:48px;
-  }
-
-  .msg{
-    padding:7px 8px;
-    font-size:11px;
+  /* 작업치료실 모바일 */
+  #roomScene.room-ot .roomNpcImg {
+    right: 1.5% !important;
+    bottom: -15px !important;
+    width: 41% !important;
+    min-width: 140px !important;
+    max-width: none !important;
   }
 }
-/* === Codex mobile hotfix: compact Kakao/in-app layout === */
+/* === Room NPC floor shadow: 원근감 추가 === */
 
-html,
-body{
-  width:100%;
-  height:100%;
-  min-height:100%;
-  overflow:hidden;
+#roomScene::after {
+  content: "";
+  position: absolute;
+  z-index: 7;
+
+  right: 3%;
+  bottom: 2px;
+
+  width: 34%;
+  height: 22px;
+
+  border-radius: 999px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 0, 0, 0.38) 0%,
+    rgba(0, 0, 0, 0.24) 42%,
+    rgba(0, 0, 0, 0) 72%
+  );
+
+  filter: blur(2px);
+  pointer-events: none;
 }
 
-body{
-  position:fixed;
-  inset:0;
+/* 방별 바닥 그림자 위치 조정 */
+#roomScene.room-clinical::after {
+  right: 1%;
+  bottom: 3px;
+  width: 40%;
+  height: 24px;
 }
 
-.app{
-  height:100dvh;
-  min-height:0;
-  padding:4px 4px calc(4px + var(--safe-bottom));
-  overflow:hidden;
+#roomScene.room-nurse::after {
+  right: 2%;
+  bottom: 3px;
+  width: 35%;
+  height: 22px;
 }
 
-.shell{
-  height:100%;
-  min-height:0;
-  border-width:3px;
-  border-radius:12px;
+#roomScene.room-social::after {
+  right: 2%;
+  bottom: 3px;
+  width: 37%;
+  height: 22px;
 }
 
-.top{
-  flex:0 0 34px;
-  height:34px;
-  min-height:34px;
-  padding:0 8px;
-  font-size:13px;
+#roomScene.room-ot::after {
+  right: 2%;
+  bottom: 3px;
+  width: 35%;
+  height: 22px;
+}
+/* === Room NPC back shadow gradient === */
+
+#roomScene::before {
+  content: "";
+  position: absolute;
+  z-index: 7;
+  pointer-events: none;
+
+  right: 0%;
+  bottom: 0;
+
+  width: 44%;
+  height: 48%;
+
+  border-radius: 999px 999px 0 0;
+
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 0, 0, 0.46) 0%,
+    rgba(0, 0, 0, 0.32) 34%,
+    rgba(0, 0, 0, 0.18) 56%,
+    rgba(0, 0, 0, 0) 76%
+  );
+
+  filter: blur(3px);
+}
+#roomScene.room-clinical::before {
+  right: -6%;
+  bottom: -2px;
+  width: 58%;
+  height: 54%;
 }
 
-.badge{
-  min-width:48px;
-  padding:3px 6px;
-  border-width:2px;
-  font-size:10px;
+#roomScene.room-nurse::before {
+  right: -1%;
+  bottom: 0;
+  width: 41%;
+  height: 46%;
+
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 0, 0, 0.28) 0%,
+    rgba(0, 0, 0, 0.18) 36%,
+    rgba(0, 0, 0, 0.08) 58%,
+    rgba(0, 0, 0, 0) 76%
+  );
+
+  filter: blur(4px);
+}
+#roomScene.room-social::before {
+  right: -1%;
+  bottom: 0;
+  width: 46%;
+  height: 48%;
 }
 
-.screen{
-  flex:0 0 38dvh;
-  min-height:218px;
-  height:38dvh;
-  max-height:330px;
+#roomScene.room-ot::before {
+  right: -1%;
+  bottom: 0;
+  width: 43%;
+  height: 48%;
+}
+/* =========================================================
+   RESULT OVERRIDE: 공동 추천 결과 카드 충돌 방지
+   - 새 JS 구조 전용
+   - 기존 resultNpcCard / speechBubble / PC 2열 강제 규칙 무력화
+========================================================= */
+
+body:has(#resultScene:not(.hidden)) .resultShareCard {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+  grid-template-columns: none !important;
 }
 
-.dialog{
-  flex:1 1 auto;
-  min-height:0;
-  max-height:none;
-  display:flex;
-  flex-direction:column;
-  overflow:hidden;
-  padding:7px;
+body:has(#resultScene:not(.hidden)) .resultMainCard,
+body:has(#resultScene:not(.hidden)) .primaryResultSection,
+body:has(#resultScene:not(.hidden)) .considerationSection,
+body:has(#resultScene:not(.hidden)) .evidence,
+body:has(#resultScene:not(.hidden)) .resultNotice {
+  grid-column: auto !important;
+  grid-row: auto !important;
+  width: 100% !important;
 }
 
-.progressBox{
-  flex:0 0 auto;
-  margin-bottom:5px;
+/* 가장 잘 맞는 전문가: 공동 1위면 PC 2열, 모바일 1열 */
+.primaryExpertGrid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)) !important;
+  gap: 14px !important;
+  align-items: stretch !important;
+  width: 100% !important;
 }
 
-.progressLabel{
-  min-width:46px;
-  font-size:10px;
+.primaryExpertCard {
+  position: relative !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  height: auto !important;
+  overflow: visible !important;
+
+  border: 3px solid var(--line) !important;
+  border-radius: 14px !important;
+  padding: 12px !important;
+  background: linear-gradient(180deg, #fffdf4, #fff1d3) !important;
+  color: #21150d !important;
+  text-align: center !important;
+  box-shadow: inset 0 0 0 2px #ffffff80 !important;
 }
 
-.progressTrack{
-  height:10px;
+/* 기존 .speechBubble 충돌 피하기: 새 말풍선 전용 */
+.primaryExpertBubble {
+  position: relative !important;
+  display: inline-block !important;
+  width: auto !important;
+  max-width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+
+  margin: 0 auto 12px !important;
+  padding: 9px 12px !important;
+  border: 2px solid #ccb183 !important;
+  border-radius: 12px !important;
+  background: #fff8ef !important;
+  color: #2b160c !important;
+
+  font-size: 12px !important;
+  font-weight: 900 !important;
+  line-height: 1.45 !important;
+  text-align: center !important;
+  transform: none !important;
 }
 
-.speaker{
-  flex:0 0 auto;
-  margin-bottom:4px;
-  font-size:13px;
+.primaryExpertBubble::after {
+  content: "" !important;
+  position: absolute !important;
+  right: 30px !important;
+  bottom: -8px !important;
+  width: 14px !important;
+  height: 14px !important;
+  background: #fff8ef !important;
+  border-right: 2px solid #ccb183 !important;
+  border-bottom: 2px solid #ccb183 !important;
+  transform: rotate(45deg) !important;
 }
 
-.textbox{
-  flex:0 0 auto;
-  min-height:0;
-  max-height:76px;
-  overflow:auto;
-  padding:8px;
-  border-width:3px;
-  font-size:12.5px;
-  line-height:1.38;
-  word-break:normal;
-  overflow-wrap:anywhere;
+/* 결과 카드 안 이미지: 방 NPC absolute 규칙 완전 차단 */
+.primaryExpertImageBox {
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  width: 100% !important;
+  height: 180px !important;
+  min-height: 180px !important;
+  max-height: 180px !important;
+  margin: 4px auto 10px !important;
+  overflow: visible !important;
 }
 
-.choices{
-  flex:1 1 auto;
-  min-height:0;
-  overflow:auto;
-  gap:6px;
-  margin-top:6px;
-  padding-bottom:2px;
+.primaryExpertCharacter {
+  position: static !important;
+  inset: auto !important;
+  top: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  left: auto !important;
+
+  display: block !important;
+  width: auto !important;
+  height: auto !important;
+  max-width: 170px !important;
+  max-height: 175px !important;
+  min-width: 0 !important;
+
+  object-fit: contain !important;
+  object-position: center bottom !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  transform: none !important;
+  filter: drop-shadow(4px 5px 0 rgba(0, 0, 0, 0.22)) !important;
+  image-rendering: pixelated !important;
+  z-index: auto !important;
 }
 
-.choice{
-  min-height:36px;
-  padding:8px;
-  border-width:2px;
-  border-radius:7px;
-  font-size:12px;
-  line-height:1.28;
-  word-break:normal;
-  overflow-wrap:anywhere;
+.primaryExpertName {
+  display: block !important;
+  width: 100% !important;
+  margin: 6px 0 8px !important;
+  color: #21150d !important;
+  font-size: 18px !important;
+  font-weight: 1000 !important;
+  line-height: 1.35 !important;
+  text-align: center !important;
+  word-break: keep-all !important;
 }
 
-.navbar{
-  flex:0 0 auto;
-  gap:5px;
-  margin-top:6px;
+.primaryExpertDesc {
+  display: block !important;
+  width: 100% !important;
+  margin: 0 0 12px !important;
+  color: #21150d !important;
+  font-size: 12px !important;
+  font-weight: 750 !important;
+  line-height: 1.55 !important;
+  text-align: center !important;
+  word-break: keep-all !important;
 }
 
-.navbtn{
-  min-height:33px;
-  padding:6px 3px;
-  border-width:2px;
-  font-size:11px;
+.primaryReasonBox {
+  display: block !important;
+  width: 100% !important;
+  margin-top: auto !important;
+  padding: 10px !important;
+  border: 2px solid rgba(60, 36, 20, 0.28) !important;
+  border-radius: 10px !important;
+  background: rgba(255, 248, 224, 0.85) !important;
+  color: #21150d !important;
+  text-align: left !important;
 }
 
-.footer{
-  display:none;
+.primaryReasonBox .cardTitle {
+  margin-bottom: 7px !important;
 }
 
-/* title compaction */
-
-.titleText{
-  top:14px;
-  font-size:clamp(21px,6.8vw,28px);
-  line-height:1.08;
+.primaryReasonBox ul {
+  margin: 6px 0 0 !important;
+  padding-left: 18px !important;
 }
 
-.sub{
-  top:78px;
-  left:18px;
-  right:18px;
-  font-size:11.5px;
-  line-height:1.25;
-  word-break:normal;
-  overflow-wrap:anywhere;
+.primaryReasonBox li {
+  margin: 4px 0 !important;
+  color: #21150d !important;
+  font-size: 12px !important;
+  line-height: 1.45 !important;
 }
 
-.building{
-  top:49%;
-  width:168px;
-  height:86px;
-  border-width:4px;
+/* 함께 고려 카드 */
+.considerationGrid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)) !important;
+  gap: 10px !important;
+  width: 100% !important;
 }
 
-.building:before{
-  top:-29px;
-  height:34px;
-  border-width:4px;
+.considerationCard {
+  border: 3px solid var(--line) !important;
+  border-radius: 12px !important;
+  padding: 12px !important;
+  background: linear-gradient(180deg, #f3f9ff, #e5f2ff) !important;
+  color: #21150d !important;
+  box-shadow: inset 0 0 0 2px #ffffff80 !important;
 }
 
-.cross{
-  top:-46px;
-  width:34px;
-  height:34px;
-  border-width:4px;
-  line-height:25px;
-  font-size:20px;
+.considerationName {
+  margin-bottom: 7px !important;
+  color: #21150d !important;
+  font-size: 15px !important;
+  font-weight: 1000 !important;
+  line-height: 1.35 !important;
 }
 
-.win{
-  top:32px;
-  width:28px;
-  height:25px;
-  border-width:3px;
+.considerationReason {
+  margin-top: 8px !important;
+  color: #21150d !important;
+  font-size: 12px !important;
+  line-height: 1.5 !important;
 }
 
-.w1{left:22px}
-.w2{right:22px}
-
-.door{
-  width:32px;
-  height:44px;
-  border-width:3px;
-  border-bottom:0;
-}
-
-.startBtn{
-  bottom:44px;
-  width:184px;
-  min-height:39px;
-  padding:8px 10px;
-  border-width:3px;
-  font-size:15px;
-}
-
-.msg{
-  left:10px;
-  right:10px;
-  bottom:7px;
-  padding:6px 8px;
-  border-width:3px;
-  font-size:10.5px;
-  line-height:1.25;
-}
-
-/* hall compaction */
-
-.counter{
-  top:18px;
-  height:56px;
-  border-width:3px;
-}
-
-.counter:before{
-  top:-23px;
-  padding:3px 16px;
-  border-width:2px;
-  font-size:12px;
-}
-
-.staff{
-  top:56px;
-  transform:translateX(-50%) scale(.86);
-}
-
-.roomGrid{
-  left:8px;
-  right:8px;
-  bottom:8px;
-  gap:6px;
-}
-
-.roomBtn{
-  height:68px;
-  padding:5px 4px;
-  border-width:3px;
-  border-radius:8px;
-  font-size:12px;
-  line-height:1.15;
-  word-break:normal;
-  overflow-wrap:anywhere;
-}
-
-.roomIcon{
-  font-size:18px;
-  margin-bottom:2px;
-}
-
-.roomSmall{
-  margin-top:2px;
-  font-size:9px;
-  line-height:1.15;
-  word-break:normal;
-  overflow-wrap:anywhere;
-}
-
-.recommended,
-.secondaryMark{
-  outline-width:3px;
-}
-
-/* room compaction */
-
-.wall{
-  height:39%;
-}
-
-.wood{
-  top:39%;
-}
-
-.bookshelf{
-  right:14px;
-  top:38px;
-  width:58px;
-  height:86px;
-  border-width:3px;
-}
-
-.bookshelf:before{
-  left:6px;
-  right:6px;
-  top:12px;
-  height:9px;
-  box-shadow:0 20px #e0aa39,0 40px #9c6bc9,0 60px #4e9b43;
-}
-
-.table{
-  left:12px;
-  bottom:34px;
-  width:168px;
-  height:54px;
-  border-width:3px;
-}
-
-.tableText{
-  left:17px;
-  bottom:53px;
-  width:158px;
-  font-size:9px;
-  line-height:1.15;
-  word-break:normal;
-  overflow-wrap:anywhere;
-}
-
-.roomNpc{
-  left:56%;
-  top:30%;
-  transform:scale(.9);
-}
-
-.playerRoom{
-  left:22%;
-  top:58%;
-  transform:scale(.9);
-}
-
-/* result screen: make clear card usable on small phones */
-
-.paperBg{
-  padding:6px;
-}
-
-.paper{
-  padding:8px;
-  border-width:3px;
-  border-radius:9px;
-}
-
-.paper:before{
-  margin-bottom:5px;
-  padding:3px 9px;
-  border-width:2px;
-  font-size:9px;
-}
-
-.paper h2{
-  margin:2px 0 7px;
-  font-size:16px;
-}
-
-#shareCard{
-  gap:6px;
-}
-
-.course,
-.reason,
-.evidence{
-  padding:7px;
-  border-width:2px;
-  border-radius:7px;
-  font-size:11.5px;
-  line-height:1.35;
-  word-break:normal;
-  overflow-wrap:anywhere;
-}
-
-.cardTitle{
-  margin-bottom:5px;
-  padding:2px 6px;
-  border-width:2px;
-  font-size:10px;
-}
-
-.bar{
-  margin:6px 0;
-}
-
-.barTop{
-  font-size:10px;
-  line-height:1.15;
-}
-
-.barTop span:first-child{
-  word-break:normal;
-  overflow-wrap:anywhere;
-}
-
-.track{
-  height:10px;
-  border-width:1px;
-}
-
-.copyBtn,
-.saveBtn,
-#downloadLink{
-  min-height:36px;
-  padding:8px;
-  border-width:2px;
-  font-size:12px;
-}
-
-/* On the result screen, give the card more room and shrink the dialog. */
-body:has(#resultScene:not(.hidden)) .screen{
-  flex-basis:58dvh;
-  height:58dvh;
-  max-height:none;
-}
-
-body:has(#resultScene:not(.hidden)) .dialog{
-  flex:0 0 128px;
-}
-
-body:has(#resultScene:not(.hidden)) .textbox{
-  max-height:45px;
-}
-
-body:has(#resultScene:not(.hidden)) .choices{
-  display:none;
-}
-
-/* Very small or cramped in-app browser heights */
-@media (max-height:700px){
-  .screen{
-    flex-basis:34dvh;
-    height:34dvh;
-    min-height:196px;
+/* PC 폭에서 결과지만 조금 넓게 */
+@media (min-width: 760px) {
+  .app {
+    max-width: 760px !important;
   }
 
-  .textbox{
-    max-height:58px;
-    font-size:12px;
+  body:has(#resultScene:not(.hidden)) .app {
+    max-width: 820px !important;
   }
 
-  .choice{
-    min-height:32px;
-    padding:7px;
-    font-size:11.5px;
+  .primaryExpertGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
   }
 
-  .roomBtn{
-    height:60px;
-  }
-
-  .roomSmall{
-    font-size:8.5px;
-  }
-
-  body:has(#resultScene:not(.hidden)) .screen{
-    flex-basis:56dvh;
-    height:56dvh;
-  }
-
-  body:has(#resultScene:not(.hidden)) .dialog{
-    flex-basis:112px;
-  }
-}
-/* === Title overlap fix === */
-
-.titleText{
-  top:18px !important;
-  font-size:clamp(21px,6.2vw,27px) !important;
-  line-height:1.22 !important;
-  letter-spacing:0 !important;
-  text-shadow:
-    2px 2px #173b70,
-    -1px -1px #173b70,
-    1px -1px #173b70,
-    -1px 1px #173b70 !important;
-  word-break:keep-all !important;
-  overflow-wrap:normal !important;
-}
-
-.sub{
-  top:106px !important;
-  font-size:11px !important;
-  line-height:1.25 !important;
-}
-
-.building{
-  top:53% !important;
-}
-
-.cross{
-  top:-42px !important;
-}
-
-@media (max-width:360px){
-  .titleText{
-    top:16px !important;
-    font-size:20px !important;
-    line-height:1.24 !important;
-  }
-
-  .sub{
-    top:100px !important;
-    font-size:10.5px !important;
-  }
-
-  .building{
-    top:55% !important;
-  }
-}
-/* === Codex mobile layout fix v2: no tiny textbox scroll === */
-
-.dialog{
-  flex:0 0 auto !important;
-  display:block !important;
-  min-height:0 !important;
-  max-height:none !important;
-  overflow:visible !important;
-  padding:7px !important;
-}
-
-.textbox{
-  max-height:none !important;
-  overflow:visible !important;
-  min-height:0 !important;
-  padding:8px 9px !important;
-  font-size:12.5px !important;
-  line-height:1.42 !important;
-  word-break:keep-all !important;
-  overflow-wrap:break-word !important;
-}
-
-.choices{
-  display:grid !important;
-  flex:0 0 auto !important;
-  overflow:visible !important;
-  max-height:none !important;
-}
-
-.choices:empty{
-  display:none !important;
-  margin:0 !important;
-  padding:0 !important;
-}
-
-.navbar{
-  margin-top:7px !important;
-}
-
-.screen{
-  flex:1 1 auto !important;
-  height:auto !important;
-  min-height:245px !important;
-  max-height:none !important;
-}
-
-.footer{
-  display:none !important;
-}
-
-/* 질문 화면: 선택지가 많아도 한 화면에 들어오도록 버튼을 살짝 압축 */
-.choice{
-  min-height:34px !important;
-  padding:7px 8px !important;
-  font-size:11.8px !important;
-  line-height:1.26 !important;
-  word-break:keep-all !important;
-  overflow-wrap:break-word !important;
-}
-
-/* 선택지가 없는 안내/결과 전 단계는 대화창이 내용만큼만 차지 */
-.dialog:has(.choices:empty) .textbox{
-  min-height:0 !important;
-}
-
-.dialog:has(.choices:empty){
-  padding-bottom:7px !important;
-}
-
-/* 결과 화면에서는 결과지를 크게, 아래 대화창은 짧게 */
-body:has(#resultScene:not(.hidden)) .screen{
-  flex:1 1 auto !important;
-  min-height:0 !important;
-}
-
-body:has(#resultScene:not(.hidden)) .dialog{
-  flex:0 0 auto !important;
-}
-
-body:has(#resultScene:not(.hidden)) .textbox{
-  font-size:11.5px !important;
-  line-height:1.3 !important;
-}
-
-/* 짧은 모바일 화면 대응 */
-@media (max-height:700px){
-  .top{
-    flex-basis:32px !important;
-    height:32px !important;
-    min-height:32px !important;
-  }
-
-  .screen{
-    min-height:210px !important;
-  }
-
-  .textbox{
-    padding:7px 8px !important;
-    font-size:11.5px !important;
-    line-height:1.32 !important;
-  }
-
-  .choice{
-    min-height:30px !important;
-    padding:6px 7px !important;
-    font-size:11px !important;
-    line-height:1.2 !important;
-  }
-
-  .navbar{
-    gap:5px !important;
-    margin-top:6px !important;
-  }
-
-  .navbtn{
-    min-height:31px !important;
-    padding:5px 3px !important;
-    font-size:10.5px !important;
-  }
-}
-/* === Codex mobile stage rebalance v3 === */
-
-/* 화면을 너무 세로로 늘리지 않고, 무대처럼 보이게 재배치 */
-.screen{
-  flex:0 0 58dvh !important;
-  height:58dvh !important;
-  min-height:390px !important;
-  max-height:500px !important;
-}
-
-/* 하단 대화창은 내용만큼만 */
-.dialog{
-  flex:0 0 auto !important;
-}
-
-/* 1. 시작 버튼과 안내 박스 겹침 해결 */
-.startBtn{
-  bottom:74px !important;
-  width:184px !important;
-  min-height:42px !important;
-  padding:9px 12px !important;
-  z-index:4 !important;
-}
-
-.msg{
-  bottom:14px !important;
-  left:14px !important;
-  right:14px !important;
-  padding:8px 10px !important;
-  z-index:3 !important;
-}
-
-/* 타이틀은 조금 위, 병원은 중앙 쪽으로 */
-.titleText{
-  top:18px !important;
-  font-size:clamp(23px,6.4vw,29px) !important;
-  line-height:1.18 !important;
-}
-
-.sub{
-  top:112px !important;
-}
-
-.building{
-  top:50% !important;
-  width:190px !important;
-  height:98px !important;
-}
-
-/* 2. 접수실 가운데가 휑하지 않게: 바닥 길 + 방 버튼을 중간으로 */
-.floor:before{
-  content:"";
-  position:absolute;
-  left:50%;
-  top:110px;
-  bottom:118px;
-  width:76px;
-  transform:translateX(-50%);
-  background:
-    linear-gradient(90deg,#00000010 1px,transparent 1px) 0 0/18px 18px,
-    #c3b68e;
-  border-left:3px solid #7a6241;
-  border-right:3px solid #7a6241;
-  opacity:.75;
-}
-
-.floor:after{
-  content:"";
-  position:absolute;
-  left:50%;
-  top:47%;
-  width:132px;
-  height:38px;
-  transform:translate(-50%,-50%);
-  background:#8d5a38;
-  border:3px solid var(--line);
-  border-radius:999px;
-  box-shadow:0 4px #0003;
-  opacity:.85;
-}
-
-.counter{
-  top:28px !important;
-}
-
-.staff{
-  top:84px !important;
-  z-index:3;
-}
-
-.roomGrid{
-  top:auto !important;
-  bottom:16px !important;
-  left:10px !important;
-  right:10px !important;
-  gap:8px !important;
-}
-
-.roomBtn{
-  height:76px !important;
-}
-
-/* 접수실 화면에서는 방 버튼이 너무 아래 붙어 보이지 않게 */
-#hallScene .roomGrid{
-  bottom:18px !important;
-}
-
-/* 상담실도 빈 공간이 덜 느껴지도록 소품 위치 압축 */
-#roomScene .table{
-  bottom:58px !important;
-}
-
-#roomScene .playerRoom{
-  top:61% !important;
-}
-
-#roomScene .roomNpc{
-  top:34% !important;
-}
-
-/* 짧은 모바일 화면에서는 화면 전체를 조금 더 압축 */
-@media (max-height:760px){
-  .screen{
-    flex-basis:54dvh !important;
-    height:54dvh !important;
-    min-height:340px !important;
-  }
-
-  .building{
-    top:49% !important;
-    width:178px !important;
-    height:92px !important;
-  }
-
-  .startBtn{
-    bottom:68px !important;
-  }
-
-  .msg{
-    bottom:10px !important;
-    font-size:10.5px !important;
-  }
-
-  .roomBtn{
-    height:68px !important;
-  }
-
-  .floor:before{
-    top:104px;
-    bottom:104px;
+  .considerationGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
   }
 }
 
-/* 아주 작은 화면 */
-@media (max-width:360px){
-  .screen{
-    min-height:330px !important;
+/* 모바일에서는 무조건 1열 */
+@media (max-width: 640px) {
+  .primaryExpertGrid,
+  .considerationGrid {
+    grid-template-columns: 1fr !important;
   }
 
-  .titleText{
-    font-size:21px !important;
+  .primaryExpertImageBox {
+    height: 165px !important;
+    min-height: 165px !important;
+    max-height: 165px !important;
   }
 
-  .sub{
-    top:104px !important;
+  .primaryExpertCharacter {
+    max-width: 150px !important;
+    max-height: 160px !important;
   }
 
-  .startBtn{
-    bottom:66px !important;
+  .primaryExpertName {
+    font-size: 17px !important;
   }
 
-  .roomBtn{
-    height:64px !important;
+  .primaryExpertDesc,
+  .primaryReasonBox li,
+  .considerationReason {
+    font-size: 11.5px !important;
   }
 }
-/* === Room background images === */
+/* =========================================================
+   NEW RESULT PAGE OVERRIDE
+   기존 resultNpcCard / speechBubble / resultShareCard 충돌 회피
+========================================================= */
 
-#hallScene{
-  background:url("./assets/rooms/hall.png") center/cover no-repeat !important;
+body:has(#resultScene:not(.hidden)) .resultShareCard {
+  display: block !important;
+  grid-template-columns: none !important;
 }
 
-#hallScene .floor,
-#hallScene .counter{
-  display:none !important;
+.mhResultWrap {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+  width: 100% !important;
 }
 
-#roomScene{
-  background-position:center !important;
-  background-size:cover !important;
-  background-repeat:no-repeat !important;
+.mhResultSection {
+  width: 100% !important;
+  border: 3px solid var(--line) !important;
+  border-radius: 12px !important;
+  padding: 12px !important;
+  background: linear-gradient(180deg, #fff7dc, #ffe9b6) !important;
+  box-shadow: 0 4px #0002, inset 0 0 0 2px #ffffff80 !important;
 }
 
-#roomScene.room-clinical{
-  background-image:url("./assets/rooms/clinical.png") !important;
+.mhSectionTitle {
+  display: inline-block !important;
+  margin: 0 0 10px !important;
+  padding: 5px 10px !important;
+  border-radius: 999px !important;
+  background: #3a2517 !important;
+  color: #fff4da !important;
+  font-size: 12px !important;
+  font-weight: 1000 !important;
 }
 
-#roomScene.room-nurse{
-  background-image:url("./assets/rooms/nurse.png") !important;
+.mhResultExpertGrid {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 12px !important;
+  width: 100% !important;
 }
 
-#roomScene.room-social{
-  background-image:url("./assets/rooms/social.png") !important;
+.mhResultExpertCard {
+  border: 3px solid var(--accent, var(--line)) !important;
+  border-radius: 14px !important;
+  padding: 12px !important;
+  background: #fffdf4 !important;
+  color: #21150d !important;
+  text-align: center !important;
+  overflow: hidden !important;
+  box-shadow: inset 0 0 0 2px #ffffff90 !important;
 }
 
-#roomScene.room-ot{
-  background-image:url("./assets/rooms/ot.png") !important;
+.mhResultTag {
+  display: inline-block !important;
+  margin: 0 auto 9px !important;
+  padding: 4px 8px !important;
+  border-radius: 999px !important;
+  background: var(--accent, #3a2517) !important;
+  color: #fff !important;
+  font-size: 11px !important;
+  font-weight: 1000 !important;
 }
 
-#roomScene .wall,
-#roomScene .wood,
-#roomScene .bookshelf,
-#roomScene .table,
-#roomScene .tableText{
-  display:none !important;
-}
-/* === Hall choice cards in center corridor === */
-
-#hallScene .roomGrid{
-  top:47% !important;
-  bottom:auto !important;
-  left:50% !important;
-  right:auto !important;
-  width:min(88%,390px) !important;
-  transform:translate(-50%,-50%) !important;
-  display:grid !important;
-  grid-template-columns:1fr 1fr !important;
-  gap:10px !important;
-  z-index:5 !important;
+.mhResultBubble {
+  display: inline-block !important;
+  position: relative !important;
+  max-width: 100% !important;
+  margin: 0 auto 12px !important;
+  padding: 9px 12px !important;
+  border: 2px solid #ccb183 !important;
+  border-radius: 12px !important;
+  background: #fff8ef !important;
+  color: #2b160c !important;
+  font-size: 12px !important;
+  font-weight: 900 !important;
+  line-height: 1.45 !important;
 }
 
-#hallScene .roomBtn{
-  height:74px !important;
-  padding:7px 6px !important;
-  background:rgba(255,244,218,.96) !important;
-  backdrop-filter:blur(1px);
+.mhResultBubble::after {
+  content: "" !important;
+  position: absolute !important;
+  right: 30px !important;
+  bottom: -8px !important;
+  width: 14px !important;
+  height: 14px !important;
+  background: #fff8ef !important;
+  border-right: 2px solid #ccb183 !important;
+  border-bottom: 2px solid #ccb183 !important;
+  transform: rotate(45deg) !important;
 }
 
-#hallScene .roomIcon{
-  font-size:20px !important;
-  margin-bottom:3px !important;
+.mhResultImgWrap {
+  width: 100% !important;
+  height: 190px !important;
+  min-height: 190px !important;
+  max-height: 190px !important;
+  overflow: hidden !important;
+  display: flex !important;
+  align-items: flex-end !important;
+  justify-content: center !important;
+  margin: 2px auto 10px !important;
 }
 
-#hallScene .roomSmall{
-  font-size:9.5px !important;
-  line-height:1.16 !important;
+.mhResultCharacter {
+  display: block !important;
+  position: static !important;
+  width: auto !important;
+  height: auto !important;
+  max-width: 180px !important;
+  max-height: 185px !important;
+  min-width: 0 !important;
+  object-fit: contain !important;
+  object-position: center bottom !important;
+  transform: none !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  filter: drop-shadow(4px 5px 0 rgba(0,0,0,.22)) !important;
+  image-rendering: pixelated !important;
 }
 
-/* 접수 직원이 카드와 겹치면 살짝 위로 */
-#hallScene .staff{
-  top:24% !important;
-  z-index:4 !important;
+.mhResultExpertName {
+  margin: 6px 0 8px !important;
+  color: #21150d !important;
+  font-size: 18px !important;
+  font-weight: 1000 !important;
+  line-height: 1.35 !important;
+  word-break: keep-all !important;
+}
+
+.mhResultDesc {
+  margin: 0 0 12px !important;
+  color: #21150d !important;
+  font-size: 12px !important;
+  font-weight: 750 !important;
+  line-height: 1.55 !important;
+  word-break: keep-all !important;
+}
+
+.mhResultReason {
+  width: 100% !important;
+  margin-top: 10px !important;
+  padding: 10px !important;
+  border: 2px solid rgba(60, 36, 20, 0.28) !important;
+  border-radius: 10px !important;
+  background: rgba(255, 248, 224, 0.9) !important;
+  color: #21150d !important;
+  text-align: left !important;
+}
+
+.mhResultReasonTitle {
+  display: inline-block !important;
+  margin: 0 0 6px !important;
+  padding: 4px 8px !important;
+  border-radius: 999px !important;
+  background: #3a2517 !important;
+  color: #fff4da !important;
+  font-size: 11px !important;
+  font-weight: 1000 !important;
+}
+
+.mhResultReason ul {
+  margin: 6px 0 0 !important;
+  padding-left: 18px !important;
+}
+
+.mhResultReason li {
+  margin: 4px 0 !important;
+  color: #21150d !important;
+  font-size: 12px !important;
+  line-height: 1.45 !important;
+}
+
+.mhConsiderGrid {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 10px !important;
+}
+
+.mhConsiderCard {
+  border: 3px solid var(--accent, var(--line)) !important;
+  border-radius: 12px !important;
+  padding: 12px !important;
+  background: linear-gradient(180deg, #f3f9ff, #e5f2ff) !important;
+  color: #21150d !important;
+  box-shadow: inset 0 0 0 2px #ffffff90 !important;
+}
+
+.mhConsiderName {
+  margin-bottom: 7px !important;
+  color: #21150d !important;
+  font-size: 15px !important;
+  font-weight: 1000 !important;
+  line-height: 1.35 !important;
+}
+
+.mhConsiderDesc {
+  color: #21150d !important;
+  font-size: 12px !important;
+  line-height: 1.5 !important;
+}
+
+.mhConsiderReason {
+  margin-top: 8px !important;
+  color: #21150d !important;
+  font-size: 12px !important;
+  line-height: 1.5 !important;
+}
+
+/* PC: 결과 화면에서는 조금 더 넓게, 공동 추천은 2열 */
+@media (min-width: 760px) {
+  body:has(#resultScene:not(.hidden)) .app {
+    max-width: 820px !important;
+  }
+
+  .mhResultExpertGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .mhConsiderGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .mhResultImgWrap {
+    height: 210px !important;
+    min-height: 210px !important;
+    max-height: 210px !important;
+  }
+
+  .mhResultCharacter {
+    max-width: 200px !important;
+    max-height: 205px !important;
+  }
+}
+
+/* 모바일: 무조건 1열, 이미지 작게 */
+@media (max-width: 640px) {
+  .mhResultExpertGrid,
+  .mhConsiderGrid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .mhResultImgWrap {
+    height: 165px !important;
+    min-height: 165px !important;
+    max-height: 165px !important;
+  }
+
+  .mhResultCharacter {
+    max-width: 150px !important;
+    max-height: 160px !important;
+  }
+
+  .mhResultExpertName {
+    font-size: 17px !important;
+  }
+
+  .mhResultDesc,
+  .mhResultReason li,
+  .mhConsiderDesc,
+  .mhConsiderReason {
+    font-size: 11.5px !important;
+  }
+}
+/* 결과 전문가 카드 정렬 보정 */
+
+.mhResultExpertCard {
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 620px !important;
+}
+
+.mhResultTag {
+  align-self: center !important;
+  margin: 0 auto 8px !important;
+}
+
+.mhResultBubble {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  width: 100% !important;
+  min-height: 48px !important;
+  margin: 0 auto 12px !important;
+
+  text-align: center !important;
+  word-break: keep-all !important;
+}
+
+.mhResultBubble::after {
+  left: 50% !important;
+  right: auto !important;
+  transform: translateX(-50%) rotate(45deg) !important;
+}
+
+.mhResultImgWrap {
+  flex: 0 0 190px !important;
+  height: 190px !important;
+  min-height: 190px !important;
+  max-height: 190px !important;
+}
+
+.mhResultExpertName {
+  min-height: 52px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.mhResultDesc {
+  min-height: 58px !important;
+}
+
+.mhResultReason {
+  margin-top: auto !important;
+  min-height: 96px !important;
+}
+
+/* PC에서는 카드 높이와 이미지 영역을 더 안정적으로 */
+@media (min-width: 760px) {
+  .mhResultExpertCard {
+    min-height: 640px !important;
+  }
+
+  .mhResultImgWrap {
+    flex-basis: 210px !important;
+    height: 210px !important;
+    min-height: 210px !important;
+    max-height: 210px !important;
+  }
+
+  .mhResultBubble {
+    min-height: 52px !important;
+  }
+
+  .mhResultDesc {
+    min-height: 66px !important;
+  }
+
+  .mhResultReason {
+    min-height: 110px !important;
+  }
+}
+
+/* 모바일에서는 너무 길어지지 않게 */
+@media (max-width: 640px) {
+  .mhResultExpertCard {
+    min-height: auto !important;
+  }
+
+  .mhResultBubble {
+    min-height: 44px !important;
+  }
+
+  .mhResultImgWrap {
+    flex-basis: 165px !important;
+    height: 165px !important;
+    min-height: 165px !important;
+    max-height: 165px !important;
+  }
+
+  .mhResultExpertName,
+  .mhResultDesc,
+  .mhResultReason {
+    min-height: 0 !important;
+  }
+}
+@media (min-width: 760px) {
+  .app,
+  body:has(#resultScene:not(.hidden)) .app {
+    max-width: 520px !important;
+  }
+
+  .mhResultExpertGrid,
+  .mhConsiderGrid {
+    grid-template-columns: 1fr !important;
+  }
+}
+.capture-hide{
+    display:none !important;
+}
+.resultCredits {
+  margin: 10px 0 4px;
+  padding-top: 9px;
+  border-top: 2px dashed #d8bf8d;
+  color: #5a3a22;
+  text-align: center;
+  font-size: 10.5px;
+  line-height: 1.45;
+  font-weight: 850;
 }

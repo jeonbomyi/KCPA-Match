@@ -1,8 +1,8 @@
 const FIXED_DESCRIPTIONS = {
-  clinical: "심리평가, 심리상담, 심리치료 중심",
+  clinical: "심리평가, 심리치료(심리상담) 중심",
   nurse: "증상관리, 복약관리, 수면, 신체건강 중심",
   social: "가족, 경제, 주거, 복지서비스, 자원연계 중심",
-  ot: "ADL/IADL, 작업수행능력, 인지재활, 사회참여 기능 회복 중심"
+  ot: "작업수행능력평가, 일상생활기능훈련, 작업재활 중심"
 };
 
 const services = {
@@ -10,87 +10,92 @@ const services = {
     emoji: "💬❤️",
     room: "임상심리실",
     expert: "정신건강임상심리사",
-    service: "심리평가 · 심리상담 · 심리치료",
-    color: "#4d9a45",
+    service: "심리평가 · 심리치료(심리상담)",
+    color: "#8357c7",
     table: "WAIS · MMPI · Rorschach · 심리치료",
-    body: "",
-    desc: FIXED_DESCRIPTIONS.clinical
+    desc: FIXED_DESCRIPTIONS.clinical,
+    roomNpc: "./assets/npc/clinical-room.png",
+    resultNpc: "./assets/npc/clinical-result.png"
   },
   nurse: {
     emoji: "💊",
     room: "간호실",
     expert: "정신건강간호사",
     service: "증상관리 · 복약관리 · 수면 · 신체건강",
-    color: "#3aa69b",
+    color: "#d35252",
     table: "약장 · 수면/증상 체크 · 복약관리",
-    body: "nurseBody",
-    desc: FIXED_DESCRIPTIONS.nurse
+    desc: FIXED_DESCRIPTIONS.nurse,
+    roomNpc: "./assets/npc/nurse-room.png",
+    resultNpc: "./assets/npc/nurse-result.png"
   },
   social: {
     emoji: "🏠",
     room: "사회사업실",
     expert: "정신건강사회복지사",
     service: "가족 · 경제 · 주거 · 복지서비스 · 자원연계",
-    color: "#2f70b7",
+    color: "#4d9a45",
     table: "지역사회 지도 · 복지서비스 · 자원연계",
-    body: "socialBody",
-    desc: FIXED_DESCRIPTIONS.social
+    desc: FIXED_DESCRIPTIONS.social,
+    roomNpc: "./assets/npc/social-room.png",
+    resultNpc: "./assets/npc/social-result.png"
   },
   ot: {
     emoji: "🌱",
     room: "작업치료실",
     expert: "정신건강작업치료사",
-    service: "ADL/IADL · 작업수행능력 · 인지재활 · 사회참여",
-    color: "#8357c7",
-    table: "ADL · IADL · 인지재활 · 사회참여",
-    body: "otBody",
-    desc: FIXED_DESCRIPTIONS.ot
+    service: "작업적 일상생활훈련 · 감각/활동훈련 · 작업재활",
+    color: "#2f70b7",
+    table: "작업수행분석 · 감각훈련 · 활동훈련",
+    desc: FIXED_DESCRIPTIONS.ot,
+    roomNpc: "./assets/npc/ot-room.png",
+    resultNpc: "./assets/npc/ot-result.png"
   }
 };
 
+const SCORE_PER_CHOICE = 2.5;
+
 const flow = {
   q1: {
-    progress: ["어려움", 25],
-    text: "최근 가장 힘든 것은 무엇인가요?",
+    progress: ["주증상", 25],
+    text: "요즘 나를 가장 괴롭히는 감정이나 신체적인 신호는 무엇인가요?",
     choices: [
-      ["우울감이나 무기력이 지속돼요.", { clinical: 1, nurse: 1 }, { clinical: ["심리상담"], nurse: ["수면/신체건강"] }, "q2"],
-      ["불안과 걱정이 계속돼요.", { clinical: 2, nurse: 1 }, { clinical: ["심리상담"], nurse: ["증상관리"] }, "q2"],
-      ["잠, 약, 몸 상태가 걱정돼요.", { nurse: 3 }, { nurse: ["수면/신체건강", "복약관리"] }, "q2"],
-      ["가족·경제·주거·직장 문제가 커요.", { social: 3 }, { social: ["가족", "경제", "주거/복지서비스"] }, "q2"],
-      ["혼자 생활하거나 사회 복귀가 어려워요.", { ot: 3 }, { ot: ["ADL/IADL", "사회참여"] }, "q2"]
+      ["통제되지 않는 우울·불안, 꼬리를 무는 부정적인 생각 패턴 때문에 괴로워요.", { clinical: SCORE_PER_CHOICE }, { clinical: ["생각 및 감정 패턴 분석"] }, "q2"],
+      ["극심한 불면, 두근거림, 혹은 복용 중인 약물의 부작용이 의심되어 불안해요.", { nurse: SCORE_PER_CHOICE }, { nurse: ["수면 및 약물 부작용 점검"] }, "q2"],
+      ["가족 간의 극심한 갈등, 경제적 고립 등 나를 둘러싼 환경 전체가 숨이 막혀요.", { social: SCORE_PER_CHOICE }, { social: ["환경적 스트레스 및 지지체계 약화"] }, "q2"],
+      ["머리가 멍해 집중·기억이 안 되거나, 신체 감각이 둔하고 손발이 뻣뻣해요.", { ot: SCORE_PER_CHOICE }, { ot: ["뇌·신체 기능 저하 판별"] }, "q2"]
     ]
   },
+
   q2: {
-    progress: ["영향", 45],
-    text: "그 어려움 때문에 실제로 가장 막히는 부분은 어디인가요?",
+    progress: ["일상생활", 45],
+    text: "그 문제로 인해 내 일상에서 가장 먼저 무너진 부분은 어디인가요?",
     choices: [
-      ["왜 이런 문제가 반복되는지 알고 싶어요.", { clinical: 3 }, { clinical: ["심리평가", "심리상담"] }, "q3"],
-      ["상담이나 치료를 통해 바꾸고 싶어요.", { clinical: 3 }, { clinical: ["심리상담", "심리치료"] }, "q3"],
-      ["수면, 복약, 신체 컨디션이 무너졌어요.", { nurse: 3 }, { nurse: ["수면", "복약관리", "신체건강"] }, "q3"],
-      ["치료비, 가족, 주거, 복지서비스가 필요해요.", { social: 3 }, { social: ["경제", "가족", "주거/복지서비스"] }, "q3"],
-      ["씻기·식사·장보기·이동 같은 일상이 어려워요.", { ot: 3 }, { ot: ["ADL/IADL", "작업수행능력"] }, "q3"]
+      ["내 감정이 왜 이리 널뛰는지 도무지 알 수 없고, 생각과 판단력이 흐려져 나 자신을 통제하기 어려워요.", { clinical: SCORE_PER_CHOICE }, { clinical: ["정신 상태 및 자아 기능의 혼란"] }, "q3"],
+      ["정해진 시간에 약 챙겨 먹기, 식사하기 등 기본적인 건강 루틴이 깨졌어요.", { nurse: SCORE_PER_CHOICE }, { nurse: ["복약 및 생활 리듬 관리"] }, "q3"],
+      ["복합적인 현실 문제(돈, 주거, 복지 등)가 한꺼번에 터져서 어디서부터 어떻게 손대야 할지 막막해요.", { social: SCORE_PER_CHOICE }, { social: ["다각적 욕구 사정 및 위기 상황 파악"] }, "q3"],
+      ["음식을 안전하게 삼키기 힘들거나, 손재주가 떨어져 기본적인 옷 입기·씻기가 안 돼요.", { ot: SCORE_PER_CHOICE }, { ot: ["기본적 일상동작(ADL) 수행 능력"] }, "q3"]
     ]
   },
+
   q3: {
-    progress: ["서비스", 65],
-    text: "오늘 가장 받고 싶은 도움은 무엇에 가까운가요?",
+    progress: ["요구사항", 65],
+    text: "만약 오늘 전문가를 만난다면, 어떤 구체적인 도움을 가장 먼저 받고 싶으신가요?",
     choices: [
-      ["심리검사로 현재 상태를 정확히 평가받고 싶어요.", { clinical: 4 }, { clinical: ["심리평가"] }, "q4"],
-      ["심리상담이나 심리치료를 받고 싶어요.", { clinical: 4 }, { clinical: ["심리상담", "심리치료"] }, "q4"],
-      ["증상과 약물, 수면을 안전하게 관리하고 싶어요.", { nurse: 4 }, { nurse: ["증상관리", "복약관리", "수면"] }, "q4"],
-      ["지역사회 자원과 현실적 지원을 연결받고 싶어요.", { social: 4 }, { social: ["복지서비스", "자원연계", "경제"] }, "q4"],
-      ["일상생활과 사회참여 기능을 회복하고 싶어요.", { ot: 4 }, { ot: ["ADL/IADL", "인지재활", "사회참여"] }, "q4"]
+      ["종합심리검사로 내 마음을 진단하거나, 인지적 왜곡을 다루는 심리치료를 원해요.", { clinical: SCORE_PER_CHOICE }, { clinical: ["심리검사 및 심리치료"] }, "q4"],
+      ["현재 증상에 맞는 정확한 의학적 조언과 약물 순응도를 높일 지도를 원해요.", { nurse: SCORE_PER_CHOICE }, { nurse: ["의학적 증상 관리 조언"] }, "q4"],
+      ["내게 필요한 정부 지원, 맞춤 복지 혜택, 유관 기관들을 체계적으로 찾고 꼼꼼히 연결받고 싶어요.", { social: SCORE_PER_CHOICE }, { social: ["개인 맞춤형 자원 사정 및 연계"] }, "q4"],
+      ["컴퓨터·교구를 활용한 인지 재활이나, 마비·경직된 손 기능을 훈련하고 싶어요.", { ot: SCORE_PER_CHOICE }, { ot: ["인지 및 신체 재활 치료"] }, "q4"]
     ]
   },
+
   q4: {
-    progress: ["함께", 82],
-    text: "함께 고려해야 할 어려움이 또 있나요?",
+    progress: ["미래방향", 82],
+    text: "장기적으로 보았을 때, 내가 건강한 삶으로 복귀하기 위해 가장 필요한 숙제는 무엇인가요?",
     choices: [
-      ["심리평가나 심리치료도 함께 필요할 것 같아요.", { clinical: 2 }, { clinical: ["심리평가", "심리치료"] }, "finish"],
-      ["약, 수면, 증상 관리도 함께 필요할 것 같아요.", { nurse: 2 }, { nurse: ["증상관리", "복약관리", "수면"] }, "finish"],
-      ["가족, 경제, 주거, 복지 문제도 함께 있어요.", { social: 2 }, { social: ["가족", "경제", "주거/복지서비스"] }, "finish"],
-      ["일상생활 기능이나 사회참여도 함께 필요해요.", { ot: 2 }, { ot: ["ADL/IADL", "작업수행능력", "사회참여"] }, "finish"],
-      ["지금은 위 내용 외에는 잘 모르겠어요.", {}, {}, "finish"]
+      ["내 마음과 행동의 원인을 깊이 이해하고, 스스로 상처를 치유하며 삶의 중심을 잡는 힘 기르기", { clinical: SCORE_PER_CHOICE }, { clinical: ["심리적 자생력"] }, "finish"],
+      ["재발을 유발하는 신체 징후(수면 급감 등)를 체크하며 안정적인 의학적 상태 유지하기", { nurse: SCORE_PER_CHOICE }, { nurse: ["생체 리듬 및 재발 리스크 모니터링"] }, "finish"],
+      ["치료 이후에도 낙오되거나 고립되지 않도록, 지역사회 안에서 지속적인 모니터링과 돌봄(사례관리) 받기", { social: SCORE_PER_CHOICE }, { social: ["통합 사례관리를 통한 사회 안전망 구축"] }, "finish"],
+      ["맞춤형 보조기기나 훈련을 통해 타인의 도움을 최소화하고 독립적인 일상 자립하기", { ot: SCORE_PER_CHOICE }, { ot: ["독립적 일상생활(ADL) 자립"] }, "finish"]
     ]
   }
 };
@@ -98,8 +103,9 @@ const flow = {
 let scores;
 let route;
 let triggers;
-let primary;
-let secondary;
+let primaryKeys;
+let considerationKeys;
+let allSameScore;
 let currentRoom;
 let historyStack;
 let currentNode;
@@ -116,8 +122,9 @@ function resetState() {
   scores = freshScores();
   route = [];
   triggers = { clinical: [], nurse: [], social: [], ot: [] };
-  primary = null;
-  secondary = null;
+  primaryKeys = [];
+  considerationKeys = [];
+  allSameScore = false;
   currentRoom = null;
   historyStack = [];
   currentNode = "title";
@@ -128,8 +135,9 @@ function snapshot() {
     scores,
     route,
     triggers,
-    primary,
-    secondary,
+    primaryKeys,
+    considerationKeys,
+    allSameScore,
     currentRoom,
     currentNode
   }));
@@ -139,8 +147,9 @@ function restore(state) {
   scores = state.scores;
   route = state.route;
   triggers = state.triggers;
-  primary = state.primary;
-  secondary = state.secondary;
+  primaryKeys = state.primaryKeys || [];
+  considerationKeys = state.considerationKeys || [];
+  allSameScore = Boolean(state.allSameScore);
   currentRoom = state.currentRoom;
   currentNode = state.currentNode;
 }
@@ -151,10 +160,12 @@ function push() {
 
 function scene(id) {
   ["titleScene", "hallScene", "roomScene", "resultScene"].forEach((sceneId) => {
-    byId(sceneId).classList.add("hidden");
+    const el = byId(sceneId);
+    if (el) el.classList.add("hidden");
   });
 
-  byId(id).classList.remove("hidden");
+  const current = byId(id);
+  if (current) current.classList.remove("hidden");
 }
 
 function setBadge(text) {
@@ -211,13 +222,14 @@ function addAnswer(label, points, triggerMap) {
 }
 
 function sortedScores() {
-  return Object.entries(scores).sort((a, b) => b[1] - a[1]);
+  return Object.entries(scores).sort((a, b) => {
+    if (b[1] !== a[1]) return b[1] - a[1];
+    return Object.keys(services).indexOf(a[0]) - Object.keys(services).indexOf(b[0]);
+  });
 }
 
-function chooseSecondary(sorted) {
-  const candidates = sorted.filter(([key]) => key !== primary);
-  const withTriggers = candidates.filter(([key]) => triggers[key].length > 0);
-  return (withTriggers[0] || candidates[0])[0];
+function hasResult() {
+  return primaryKeys.length > 0 || considerationKeys.length > 0;
 }
 
 function safetyChoices() {
@@ -236,9 +248,17 @@ function safetyChoices() {
 function showSafetyHall() {
   currentNode = "safety";
   scene("hallScene");
+
+  const oldImg = byId("roomNpcImg");
+  if (oldImg) oldImg.remove();
+
+  const roomScene = byId("roomScene");
+  if (roomScene) roomScene.className = "scene hidden";
+
   setBadge("접수");
   setProgress("안전확인", 10);
   renderRooms(false);
+
   dialog(
     "접수 직원",
     "안녕하세요. 마음건강센터입니다.\n어떤 서비스가 도움이 될지 함께 찾아보겠습니다.\n먼저 안전 확인을 하겠습니다.",
@@ -249,15 +269,36 @@ function showSafetyHall() {
 function showHallResult() {
   currentNode = "hallResult";
   scene("hallScene");
+
+  const oldImg = byId("roomNpcImg");
+  if (oldImg) oldImg.remove();
+
   setBadge("서비스 정리");
   setProgress("방문", 92);
   renderRooms(true);
 
+  let message;
+
+  if (allSameScore) {
+    message =
+      "답변을 종합했습니다.\n이번 선택에서는 특정 직역이 다른 직역보다 뚜렷하게 높게 나타나지 않았습니다.\n\n상황과 필요에 따라 여러 정신건강전문요원을 함께 고려해볼 수 있습니다.";
+  } else {
+    const primaryNames = primaryKeys.map((key) => services[key].expert).join(", ");
+    const considerationNames = considerationKeys.map((key) => services[key].expert).join(", ");
+
+    message =
+      `답변을 종합했습니다.\n당신에게 가장 잘 맞는 전문가는\n‘${primaryNames}’입니다.`;
+
+    if (considerationNames) {
+      message += `\n\n또한 ‘${considerationNames}’도 함께 고려해볼 수 있습니다.`;
+    }
+  }
+
   dialog(
     "접수 직원",
-    `답변을 종합했습니다.\n가장 우선적으로 도움이 될 서비스는\n‘${services[primary].service}’입니다.\n\n또한 ‘${services[secondary].service}’도 함께 고려하면 좋겠습니다.\n\n추천 방을 둘러보거나 바로 이용기록을 확인할 수 있습니다.`,
+    `${message}\n\n추천 방을 둘러보거나 바로 결과를 확인할 수 있습니다.`,
     [
-      ["이용기록 바로 보기", () => {
+      ["나의 맞춤 전문가 확인하기", () => {
         push();
         showResult();
       }]
@@ -288,7 +329,9 @@ function ask(id) {
   const node = flow[id];
 
   scene("hallScene");
-  byId("roomScene").className = "scene hidden";
+
+  const oldImg = byId("roomNpcImg");
+  if (oldImg) oldImg.remove();
 
   setBadge(id.toUpperCase());
   setProgress(node.progress[0], node.progress[1]);
@@ -313,38 +356,70 @@ function ask(id) {
 
 function finishTriage() {
   const sorted = sortedScores();
-  primary = sorted[0][0];
-  secondary = chooseSecondary(sorted);
+  const values = sorted.map(([, value]) => value);
+  const maxScore = Math.max(...values);
+
+  allSameScore = values.every((value) => value === values[0]);
+
+  if (allSameScore) {
+    primaryKeys = [];
+    considerationKeys = sorted.map(([key]) => key);
+  } else {
+    primaryKeys = sorted
+      .filter(([, value]) => value === maxScore)
+      .map(([key]) => key);
+
+    considerationKeys = sorted
+      .filter(([key, value]) => !primaryKeys.includes(key) && value > 0)
+      .map(([key]) => key);
+  }
+
   showHallResult();
+}
+
+function roomMarkClass(key) {
+  if (!hasResult()) return "";
+
+  if (!allSameScore && primaryKeys.includes(key)) {
+    return "recommended";
+  }
+
+  if (considerationKeys.includes(key)) {
+    return "secondaryMark";
+  }
+
+  return "";
+}
+
+function roomLabel(key, service, showRecommendation) {
+  if (!showRecommendation || !hasResult()) return service.service;
+
+  if (!allSameScore && primaryKeys.includes(key)) {
+    return "추천 전문가";
+  }
+
+  if (considerationKeys.includes(key)) {
+    return "함께 고려";
+  }
+
+  return service.service;
 }
 
 function renderRooms(showRecommendation) {
   const grid = byId("roomGrid");
+  if (!grid) return;
+
   grid.innerHTML = "";
 
   Object.entries(services).forEach(([key, service]) => {
     const button = document.createElement("button");
     button.type = "button";
 
-    const markClass =
-      showRecommendation && key === primary
-        ? "recommended"
-        : showRecommendation && key === secondary
-          ? "secondaryMark"
-          : "";
-
-    const label =
-      showRecommendation && key === primary
-        ? "★ 우선 서비스"
-        : showRecommendation && key === secondary
-          ? "☆ 함께 고려"
-          : service.service;
-
-    button.className = `roomBtn ${markClass}`;
+    button.className = `roomBtn ${roomMarkClass(key)}`;
     button.innerHTML = `
       <span class="roomIcon">${service.emoji}</span>
       ${service.room}
-      <span class="roomSmall">${label}</span>
+      <span class="roomSmall">${roomLabel(key, service, showRecommendation)}</span>
     `;
 
     button.addEventListener("click", () => {
@@ -357,9 +432,9 @@ function renderRooms(showRecommendation) {
 }
 
 function roomChoices() {
-  if (primary) {
+  if (hasResult()) {
     return [
-      ["이용기록 보기", () => {
+      ["나의 맞춤 전문가 확인하기", () => {
         push();
         showResult();
       }],
@@ -376,6 +451,22 @@ function roomChoices() {
   ];
 }
 
+function ensureRoomNpcImg() {
+  let img = byId("roomNpcImg");
+
+  if (!img) {
+    img = document.createElement("img");
+    img.id = "roomNpcImg";
+    img.className = "roomNpcImg";
+    img.alt = "";
+
+    const roomScene = byId("roomScene");
+    if (roomScene) roomScene.appendChild(img);
+  }
+
+  return img;
+}
+
 function enterRoom(key) {
   currentNode = "room";
   currentRoom = key;
@@ -383,26 +474,30 @@ function enterRoom(key) {
   const service = services[key];
 
   scene("roomScene");
-  byId("roomScene").className = `scene room-${key}`;
+
+  const roomScene = byId("roomScene");
+  if (roomScene) roomScene.className = `scene roomScene room-${key}`;
+
   setBadge(service.room);
   setProgress("상담실", 96);
 
-  byId("tableText").textContent = service.table;
+  const tableText = byId("tableText");
+  if (tableText) tableText.textContent = service.table;
 
-  const roomNpc = byId("roomNpc");
-  if (roomNpc) {
-    roomNpc.className = `sprite roomNpc npc-${key}`;
-  }
+  const roomNpcImg = ensureRoomNpcImg();
+  roomNpcImg.src = service.roomNpc;
+  roomNpcImg.alt = service.expert;
 
   let intro;
-  if (key === primary) {
-    intro = `현재 답변에서는 이 전문가가 가장 우선적으로 도움이 될 수 있습니다.\n\n${service.desc}`;
-  } else if (key === secondary) {
-    intro = `현재 답변에서는 이 전문가도 함께 고려하면 좋습니다.\n\n${service.desc}`;
-  } else if (primary) {
-    intro = `이 전문가도 정신건강 회복 과정에서 협력할 수 있습니다.\n\n${service.desc}`;
-  } else {
+
+  if (!hasResult()) {
     intro = `아직 접수 질문을 시작하기 전입니다.\n이 방에서는 ${service.expert}가 어떤 도움을 주는지 미리 둘러볼 수 있습니다.\n\n${service.desc}`;
+  } else if (!allSameScore && primaryKeys.includes(key)) {
+    intro = `현재 답변에서는 이 전문가가 당신에게 가장 잘 맞는 전문가로 나타났습니다.\n\n${service.desc}`;
+  } else if (considerationKeys.includes(key)) {
+    intro = `현재 답변에서는 이 전문가도 함께 고려해볼 수 있습니다.\n\n${service.desc}`;
+  } else {
+    intro = `이 전문가도 정신건강 회복 과정에서 협력할 수 있습니다.\n\n${service.desc}`;
   }
 
   dialog(
@@ -416,40 +511,106 @@ function reasonFor(key) {
   const service = services[key];
   const picked = triggers[key];
 
-  if (picked.length) {
-    return `선택하신 답변 중 ${picked.map((item) => `‘${item}’`).join(", ")} 관련 내용이 포함되어 있어 ${service.expert}를 고려할 수 있습니다.`;
+  if (picked && picked.length) {
+    return `선택하신 답변 중 ${picked.map((item) => `‘${item}’`).join(", ")} 관련 내용이 포함되어 있어 ${service.expert}의 도움이 필요할 수 있습니다.`;
   }
 
   return `전체 답변의 흐름상 ${service.expert}도 함께 살펴볼 수 있습니다.`;
 }
 
-function resultCard(key, title, badge) {
+function resultSpeech(key) {
+  const map = {
+    clinical: "마음을 정확하게 이해하는 것부터 시작하겠습니다!",
+    nurse: "증상과 건강관리를 함께 살펴보겠습니다!",
+    social: "생활 속 어려움도 함께 연결해 보겠습니다!",
+    ot: "일상을 다시 해낼 수 있도록 도와드리겠습니다!"
+  };
+
+  return map[key] || "지금 필요한 도움을 함께 찾아보겠습니다!";
+}
+
+function resultNpcText(key) {
+  const map = {
+    clinical: "심리평가와 심리치료(심리상담)를 통해 현재의 어려움을 이해하고 회복을 위한 맞춤 도움을 제공합니다.",
+    nurse: "증상관리, 복약관리, 수면과 신체건강을 함께 살피며 안정적인 일상 관리를 돕습니다.",
+    social: "가족, 경제, 주거, 복지서비스와 자원연계를 중심으로 생활 속 어려움을 함께 살핍니다.",
+    ot: "일상생활훈련, 감각·활동훈련, 인지재활과 작업재활을 통해 일상 기능 회복을 돕습니다."
+  };
+
+  return map[key] || services[key].desc;
+}
+
+function scoreLabel(value) {
+  return `${Number(value).toFixed(1).replace(".0", "")} / 10`;
+}
+
+function selectedReasonList(key) {
+  const picked = triggers[key];
+
+  if (!picked || !picked.length) {
+    return `<li>전체 답변의 흐름상 ${services[key].expert}의 도움도 함께 고려할 수 있습니다.</li>`;
+  }
+
+  return picked.map((item) => `<li>${item}</li>`).join("");
+}
+
+function resultExpertCard(key, labelText) {
   const service = services[key];
 
   return `
-    <div class="reason" style="border-color:${service.color}">
-      <div class="cardTitle">${title}</div>
-      <div><b>${badge} ${service.emoji} ${service.expert}</b></div>
-      <div>${service.desc}</div>
-      <br>
-      <div>${reasonFor(key)}</div>
-    </div>
+    <article class="mhResultExpertCard" style="--accent:${service.color}">
+      <div class="mhResultTag">${labelText}</div>
+
+      <div class="mhResultBubble">
+        ${resultSpeech(key)}
+      </div>
+
+      <div class="mhResultImgWrap">
+        <img src="${service.resultNpc}" alt="${service.expert}" class="mhResultCharacter">
+      </div>
+
+      <div class="mhResultExpertName">
+        ${service.emoji} ${service.expert}
+      </div>
+
+      <p class="mhResultDesc">
+        ${resultNpcText(key)}
+      </p>
+
+      <div class="mhResultReason">
+        <div class="mhResultReasonTitle">이런 선택이 반영되었어요</div>
+        <ul>
+          ${selectedReasonList(key)}
+        </ul>
+      </div>
+    </article>
+  `;
+}
+
+function considerationSimpleCard(key) {
+  const service = services[key];
+
+  return `
+    <article class="mhConsiderCard" style="--accent:${service.color}">
+      <div class="mhConsiderName">${service.emoji} ${service.expert}</div>
+      <div class="mhConsiderDesc">${service.desc}</div>
+      <div class="mhConsiderReason">${reasonFor(key)}</div>
+    </article>
   `;
 }
 
 function scoreBars() {
   const sorted = sortedScores();
-  const max = Math.max(...Object.values(scores), 1);
 
   return sorted.map(([key, value]) => {
     const service = services[key];
-    const pct = Math.round((value / max) * 100);
+    const pct = Math.round((value / 10) * 100);
 
     return `
       <div class="bar">
         <div class="barTop">
           <span>${service.emoji} ${service.expert}</span>
-          <span>${value}</span>
+          <span>${scoreLabel(value)}</span>
         </div>
         <div class="track">
           <div class="fill" style="width:${pct}%;background:${service.color}"></div>
@@ -463,67 +624,107 @@ function showResult() {
   currentNode = "result";
 
   scene("resultScene");
+
+  const oldImg = byId("roomNpcImg");
+  if (oldImg) oldImg.remove();
+
   setBadge("RESULT");
   setProgress("결과", 100);
 
-  const main = services[primary];
-  const sub = services[secondary];
+  const heroTitle = allSameScore
+    ? "함께 고려해볼 수 있는<br>정신건강전문요원"
+    : "당신에게 가장 잘 맞는<br>정신건강전문요원";
+
+  const heroText = allSameScore
+    ? "이번 선택에서는 특정 직역이 뚜렷하게 높게 나타나지 않았습니다. 상황과 필요에 따라 여러 전문가를 함께 고려해볼 수 있습니다."
+    : "당신의 답변을 바탕으로 현재 시점에서 가장 잘 맞는 전문가와 함께 고려해볼 수 있는 전문가를 안내해 드립니다.";
+
+  const mainCardsHtml = allSameScore
+    ? considerationKeys.map((key) => resultExpertCard(key, "함께 고려")).join("")
+    : primaryKeys.map((key) => resultExpertCard(key, primaryKeys.length > 1 ? "공동 추천" : "추천")).join("");
+
+  const considerHtml = !allSameScore && considerationKeys.length
+    ? `
+      <section class="mhResultSection">
+        <div class="mhSectionTitle">함께 고려해볼 수 있는 전문가</div>
+        <div class="mhConsiderGrid">
+          ${considerationKeys.map((key) => considerationSimpleCard(key)).join("")}
+        </div>
+      </section>
+    `
+    : "";
 
   byId("resultPaper").innerHTML = `
-    <h2>🏆 오늘의 클리어 기록</h2>
+    <section class="resultHero">
+      <h2>🌿 ${heroTitle}</h2>
+      <p class="resultSub">${heroText}</p>
+    </section>
 
-    <div id="shareCard">
-      <div class="course">
-        <div class="cardTitle">추천 이용코스</div>
-        <b>1순위</b><br>
-        ${main.emoji} ${main.expert}<br>
-        ${main.desc}
-        <br><br>
-        <b>함께 고려</b><br>
-        ${sub.emoji} ${sub.expert}<br>
-        ${sub.desc}
-      </div>
+    <div id="shareCard" class="mhResultWrap">
+      <section class="mhResultSection">
+        <div class="mhSectionTitle">
+          ${allSameScore ? "함께 고려해볼 수 있는 전문가" : "당신에게 가장 잘 맞는 전문가"}
+        </div>
+        <div class="mhResultExpertGrid">
+          ${mainCardsHtml}
+        </div>
+      </section>
 
-      ${resultCard(primary, "왜 이 전문가인가요?", "우선")}
-      ${resultCard(secondary, "왜 함께 고려하나요?", "함께")}
+      ${considerHtml}
 
-      <div class="evidence">
+      <section class="evidence">
         <div class="cardTitle">서비스 필요도</div>
         ${scoreBars()}
-      </div>
+      </section>
 
-      <div class="course">
-        <div class="cardTitle">선택 경로</div>
-        ${route.map((item, index) => `${index + 1}. ${item}`).join("<br>")}
-      </div>
+      <section class="resultNotice">
+        이 결과는 현재 응답을 기준으로 한 안내입니다. 상황이나 필요에 따라 다른 전문가의 도움이 필요할 수 있습니다.
+      </section>
+    </div>
+
+    <div class="resultCredits">
+      기획 이혜현 · 제작 유튜브「심리실언니들」<br>
+      배포·감수 한국임상심리전문가협회
     </div>
 
     <button class="saveBtn" type="button" onclick="saveResultImage()">결과 카드 이미지 만들기</button>
     <a id="downloadLink" download="mind-health-center-result.png">이미지 다운로드</a>
-    <button class="copyBtn" type="button" onclick="copyResult()">결과 복사하기</button>
-  `;
+    <button class="copyBtn" type="button" onclick="copyResult()">결과 복사하기</button>  `;
 
   dialog(
     "이용기록",
-    "클리어 기록이 완성되었습니다.\n우선 전문가와 함께 고려하면 좋은 전문가를 각각 이유와 함께 정리했습니다."
+    allSameScore
+      ? "결과가 완성되었습니다.\n이번 선택에서는 여러 전문가를 함께 고려해볼 수 있습니다."
+      : "결과가 완성되었습니다.\n현재 응답을 바탕으로 가장 잘 맞는 전문가와 함께 고려하면 좋은 전문가를 정리했습니다."
   );
 }
 
 async function copyResult() {
-  const main = services[primary];
-  const sub = services[secondary];
-
-  const text = [
+  const lines = [
     "나에게 맞는 정신건강전문요원 찾기 결과",
-    "",
-    `우선 전문가: ${main.expert}`,
-    `설명: ${main.desc}`,
-    `이유: ${reasonFor(primary)}`,
-    "",
-    `함께 고려: ${sub.expert}`,
-    `설명: ${sub.desc}`,
-    `이유: ${reasonFor(secondary)}`
-  ].join("\n");
+    ""
+  ];
+
+  if (!allSameScore && primaryKeys.length) {
+    lines.push("당신에게 가장 잘 맞는 전문가");
+    primaryKeys.forEach((key) => {
+      lines.push(`- ${services[key].expert}`);
+      lines.push(`  설명: ${services[key].desc}`);
+      lines.push(`  이유: ${reasonFor(key)}`);
+    });
+    lines.push("");
+  }
+
+  if (considerationKeys.length) {
+    lines.push("함께 고려해볼 수 있는 전문가");
+    considerationKeys.forEach((key) => {
+      lines.push(`- ${services[key].expert}`);
+      lines.push(`  설명: ${services[key].desc}`);
+      lines.push(`  이유: ${reasonFor(key)}`);
+    });
+  }
+
+  const text = lines.filter(Boolean).join("\n");
 
   try {
     await navigator.clipboard.writeText(text);
@@ -539,6 +740,7 @@ function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
 
   chars.forEach((char) => {
     const test = line + char;
+
     if (ctx.measureText(test).width > maxWidth && line) {
       ctx.fillText(line, x, y);
       line = char;
@@ -567,93 +769,48 @@ function drawPanel(ctx, x, y, w, h, fill) {
   ctx.strokeRect(x + 14, y + 14, w - 28, h - 28);
 }
 
-function saveResultImage() {
-  const main = services[primary];
-  const sub = services[secondary];
+async function saveResultImage() {
+  const container = document.getElementById("shareCardContainer");
 
-  const canvas = document.createElement("canvas");
-  canvas.width = 1080;
-  canvas.height = 1350;
+  if (!container) {
+    alert("shareCardContainer를 찾을 수 없습니다.");
+    return;
+  }
 
-  const ctx = canvas.getContext("2d");
+  const shareCard = createShareCard({
+    services,
+    primaryKeys,
+    considerationKeys,
+    allSameScore,
+    triggers,
+    resultNpcText
+  });
 
-  ctx.fillStyle = "#f1d9ad";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  try {
+    container.innerHTML = "";
+    container.appendChild(shareCard);
 
-  ctx.fillStyle = "#173b70";
-  ctx.fillRect(0, 0, canvas.width, 170);
-
-  ctx.fillStyle = "#fff8df";
-  ctx.font = "bold 58px system-ui";
-  ctx.textAlign = "center";
-  ctx.fillText("QUEST CLEAR", 540, 88);
-
-  ctx.font = "bold 34px system-ui";
-  ctx.fillText("나에게 맞는 정신건강전문요원 찾기", 540, 135);
-
-  drawPanel(ctx, 70, 210, 940, 255, "#fff0c2");
-  drawPanel(ctx, 70, 500, 940, 255, "#eef6ff");
-  drawPanel(ctx, 70, 790, 940, 315, "#f7e7ff");
-
-  ctx.textAlign = "left";
-  ctx.fillStyle = "#22160e";
-
-  ctx.font = "bold 36px system-ui";
-  ctx.fillText("1순위 전문가", 120, 270);
-  ctx.font = "bold 46px system-ui";
-  ctx.fillText(`${main.emoji} ${main.expert}`, 120, 335);
-  ctx.font = "30px system-ui";
-  wrapText(ctx, main.desc, 120, 395, 840, 42);
-
-  ctx.font = "bold 36px system-ui";
-  ctx.fillText("함께 고려", 120, 560);
-  ctx.font = "bold 46px system-ui";
-  ctx.fillText(`${sub.emoji} ${sub.expert}`, 120, 625);
-  ctx.font = "30px system-ui";
-  wrapText(ctx, sub.desc, 120, 685, 840, 42);
-
-  ctx.font = "bold 36px system-ui";
-  ctx.fillText("선택 근거", 120, 850);
-  ctx.font = "28px system-ui";
-  let y = wrapText(ctx, reasonFor(primary), 120, 910, 840, 40);
-  y += 22;
-  wrapText(ctx, reasonFor(secondary), 120, y, 840, 40);
-
-  ctx.textAlign = "center";
-  ctx.fillStyle = "#22160e";
-  ctx.font = "26px system-ui";
-  ctx.fillText("같은 우울과 불안이라도 필요한 전문 서비스는 다를 수 있습니다.", 540, 1235);
-
-  const url = canvas.toDataURL("image/png");
-  const link = byId("downloadLink");
-  link.href = url;
-  link.style.display = "block";
-  link.textContent = "이미지 다운로드 / 길게 눌러 저장";
+    await downloadShareCard(shareCard, "mind-health-share-card.png");
+  } catch (error) {
+    console.error(error);
+    alert("공유 카드 저장에 실패했습니다.\n\n" + error.message);
+  } finally {
+    shareCard.remove();
+  }
 }
-
-function showHistory() {
-  byId("historyList").innerHTML = route.length
-    ? route.map((item, index) => `${index + 1}. ${item}`).join("<br>")
-    : "아직 선택한 내용이 없습니다.";
-
-  byId("historyModal").classList.remove("hidden");
-}
-
-function closeHistory() {
-  byId("historyModal").classList.add("hidden");
-}
-
-function goBack() {
-  if (historyStack.length <= 1) return;
-
-  const previous = historyStack.pop();
-  restore(JSON.parse(JSON.stringify(previous)));
-  rerender();
-}
-
-function rerender() {
+function renderRestoredState() {
   if (currentNode === "title") {
-    restart();
+    scene("titleScene");
+
+    const roomScene = byId("roomScene");
+    if (roomScene) roomScene.className = "scene hidden";
+
+    const oldImg = byId("roomNpcImg");
+    if (oldImg) oldImg.remove();
+
+    setBadge("START");
+    setProgress("대기", 0);
+    dialog("안내", "시작하기를 눌러 마음건강센터에 들어가 보세요.");
     return;
   }
 
@@ -662,8 +819,8 @@ function rerender() {
     return;
   }
 
-  if (flow[currentNode]) {
-    ask(currentNode);
+  if (currentNode === "hallResult") {
+    showHallResult();
     return;
   }
 
@@ -672,29 +829,74 @@ function rerender() {
     return;
   }
 
-  if (currentNode === "hallResult") {
-    showHallResult();
-    return;
-  }
-
-  if (currentNode === "room") {
+  if (currentNode === "room" && currentRoom) {
     enterRoom(currentRoom);
     return;
   }
 
   if (currentNode === "result") {
     showResult();
+    return;
+  }
+
+  if (flow[currentNode]) {
+    ask(currentNode);
   }
 }
 
+function goBack() {
+  if (historyStack.length <= 1) return;
+
+  const previousState = historyStack.pop();
+  restore(previousState);
+  renderRestoredState();
+}
+
+function showHistory() {
+  const modal = byId("historyModal");
+  const list = byId("historyList");
+
+  if (!modal || !list) return;
+
+  if (!route.length) {
+    list.innerHTML = "<p>아직 선택한 답변이 없습니다.</p>";
+  } else {
+    list.innerHTML = route
+      .map((item, index) => `<p><strong>${index + 1}.</strong> ${item}</p>`)
+      .join("");
+  }
+
+  modal.classList.remove("hidden");
+}
+
+function closeHistory() {
+  const modal = byId("historyModal");
+  if (modal) modal.classList.add("hidden");
+}
 function restart() {
   resetState();
   scene("titleScene");
-  byId("roomScene").className = "scene hidden";
+
+  const roomScene = byId("roomScene");
+  if (roomScene) roomScene.className = "scene hidden";
+
+  const oldImg = byId("roomNpcImg");
+  if (oldImg) oldImg.remove();
+
   setBadge("START");
   setProgress("대기", 0);
   dialog("안내", "시작하기를 눌러 마음건강센터에 들어가 보세요.");
   historyStack = [snapshot()];
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  const startBtn = document.getElementById("startBtn");
+
+  if (!startBtn) return;
+
+  startBtn.addEventListener("click", () => {
+    start();
+  });
+});
 
 restart();

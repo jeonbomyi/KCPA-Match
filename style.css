@@ -1794,7 +1794,7 @@ body:has(#resultScene:not(.hidden)) .resultShareCard {
 #hallScene .staffBubble {
   position: absolute;
   left: 43%;
-  top: 58px;
+  top: 48px;
   transform: translateX(-100%);
   z-index: 7;
   width: 136px;
@@ -1821,7 +1821,7 @@ body:has(#resultScene:not(.hidden)) .resultShareCard {
   content: "";
   position: absolute;
   right: -12px;
-  top: 22px;
+  top: 15px;
   width: 0;
   height: 0;
   border-top: 7px solid transparent;
@@ -1834,7 +1834,7 @@ body:has(#resultScene:not(.hidden)) .resultShareCard {
   content: "";
   position: absolute;
   right: -9px;
-  top: 24px;
+  top: 17px;
   width: 0;
   height: 0;
   border-top: 5px solid transparent;
